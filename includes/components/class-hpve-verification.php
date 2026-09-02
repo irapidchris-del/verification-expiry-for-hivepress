@@ -131,7 +131,13 @@ final class Hpve_Verification extends Component {
 
 		// Listing badges, when the site owner has asked for them to follow the vendor's.
 		add_action( 'hivepress/v1/models/listing/create', [ $this, 'sync_new_listing' ], 10, 2 );
+		// BOTH hooks, because the first ever save of the settings tab ADDS the option rather than
+		// updating it, and WordPress fires add_option_{name} for that, never update_option_{name}
+		// (resources/wordpress-php-notes.md, "update_option() fires add_option_{name} when the
+		// option does not exist"). Found on staging2 with 1.0.2: the setting saved, the sync job was
+		// never queued, and not one listing changed.
 		add_action( 'update_option_hp_' . HPVE_OPTION_PREFIX . 'scope', [ $this, 'update_scope' ], 10, 2 );
+		add_action( 'add_option_hp_' . HPVE_OPTION_PREFIX . 'scope', [ $this, 'add_scope' ], 10, 2 );
 		add_action( 'hpve_sync_listing_badges', [ $this, 'sync_all_listings' ] );
 
 		if ( is_admin() ) {
@@ -890,6 +896,17 @@ final class Hpve_Verification extends Component {
 		} else {
 			$this->sync_all_listings();
 		}
+	}
+
+	/**
+	 * The add_option_{name} twin of update_scope(), for the first save of the settings tab.
+	 *
+	 * @param string $option Option name.
+	 * @param mixed  $value Saved value.
+	 * @return void
+	 */
+	public function add_scope( $option, $value ) {
+		$this->update_scope( '', $value );
 	}
 
 	/**
