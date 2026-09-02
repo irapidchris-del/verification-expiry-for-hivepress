@@ -80,6 +80,13 @@ function hpve_uninstall_site( $prefix ) {
 
 	wp_clear_scheduled_hook( 'verification_expiry_for_hivepress_release_refresh' );
 
+	// The one-off listing badge sync queued when "Badges to Expire" is switched to both. Queued
+	// through HivePress's scheduler (Action Scheduler, group "hivepress"); with the plugin gone its
+	// callback no longer exists.
+	if ( function_exists( 'as_unschedule_all_actions' ) ) {
+		as_unschedule_all_actions( 'hpve_sync_listing_badges', [], 'hivepress' );
+	}
+
 	// Any ordinary transient the plugin has ever set. Nothing writes one today, but a transient is
 	// stored as "_transient_{name}" plus a separate "_transient_timeout_{name}" row, so the prefix sweep
 	// used for options below cannot match them: it anchors on the prefix at the start of the name.

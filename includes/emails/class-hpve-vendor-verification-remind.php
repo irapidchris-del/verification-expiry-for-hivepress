@@ -57,7 +57,7 @@ class Hpve_Vendor_Verification_Remind extends Email {
 				'body'    => hp\sanitize_html(
 					sprintf(
 						/* translators: 1: the vendor's name, 2: their profile name, 3: the expiry date, 4: the link to their profile. All four are filled in automatically. */
-						__( 'Hi, %1$s! The verified badge on your profile "%2$s" is due for review on %3$s. Please make sure your profile, listings and contact details are up to date before then, so it can be renewed: %4$s', 'verification-expiry-for-hivepress' ),
+						__( 'Hi, %1$s! Your verified status for "%2$s" is due for review on %3$s. Please make sure your profile, listings and contact details are up to date before then, so it can be renewed: %4$s', 'verification-expiry-for-hivepress' ),
 						'%user_name%',
 						'%vendor_name%',
 						'%expiry_date%',

@@ -83,6 +83,19 @@ final class Hpve_Verification extends Component {
 	protected $pending = [];
 
 	/**
+	 * How many save_post runs for the vendor being edited are currently open.
+	 *
+	 * Core's meta box save calls wp_update_post() for every field stored on the post row itself
+	 * (the User field, alias post_author, is one), and each of those fires a NESTED save_post
+	 * from inside the outer one. A flush from the nested run would apply the queued change while
+	 * the outer loop still had fields left to write, which is the exact fault this queue exists
+	 * to prevent. So the flush waits for the outermost run to finish.
+	 *
+	 * @var int
+	 */
+	protected $depth = 0;
+
+	/**
 	 * Class constructor.
 	 *
 	 * @param array $args Component arguments.
@@ -104,12 +117,22 @@ final class Hpve_Verification extends Component {
 		add_action( 'hivepress/v1/models/vendor/update_hpve_verified_until', [ $this, 'update_until' ], 10, 2 );
 
 		// Apply clock changes queued during a vendor edit screen save, once core has saved every
-		// field. Priority 100 so it runs after core's own save_post handler at 10.
-		add_action( 'save_post_hp_vendor', [ $this, 'flush_pending' ], 100 );
+		// field. Both on the GENERIC save_post: WordPress fires save_post_{type} BEFORE save_post
+		// (wp-includes/post.php, wp_insert_post), so a flush on save_post_hp_vendor ran before
+		// core's handler had written a single field and applied nothing. That shipped in 1.0.1
+		// and was caught on staging2. Priority 1 counts the save in, priority 100 counts it out
+		// and flushes once the outermost save is done; see flush_pending() for the nesting.
+		add_action( 'save_post', [ $this, 'enter_save' ], 1 );
+		add_action( 'save_post', [ $this, 'flush_pending' ], 100 );
 
 		// Revoke and remind on core's own hourly event (resources/hivepress-framework.md, "Scheduling").
 		add_action( 'hivepress/v1/events/hourly', [ $this, 'expire_vendors' ] );
 		add_action( 'hivepress/v1/events/hourly', [ $this, 'remind_vendors' ] );
+
+		// Listing badges, when the site owner has asked for them to follow the vendor's.
+		add_action( 'hivepress/v1/models/listing/create', [ $this, 'sync_new_listing' ], 10, 2 );
+		add_action( 'update_option_hp_' . HPVE_OPTION_PREFIX . 'scope', [ $this, 'update_scope' ], 10, 2 );
+		add_action( 'hpve_sync_listing_badges', [ $this, 'sync_all_listings' ] );
 
 		if ( is_admin() ) {
 
@@ -426,7 +449,7 @@ final class Hpve_Verification extends Component {
 							'_order'      => 10,
 						],
 
-						HPVE_OPTION_PREFIX . 'reminder_days'  => [
+						HPVE_OPTION_PREFIX . 'reminder_days' => [
 							'label'       => esc_html__( 'Reminder (days before expiry)', 'verification-expiry-for-hivepress' ),
 							'description' => esc_html__( 'Email the vendor this many days before their verified status ends, so they can update their details in time. Set 0 to send no reminder.', 'verification-expiry-for-hivepress' ),
 							'type'        => 'number',
@@ -436,13 +459,24 @@ final class Hpve_Verification extends Component {
 							'_order'      => 20,
 						],
 
-						HPVE_OPTION_PREFIX . 'expiry_email'   => [
+						HPVE_OPTION_PREFIX . 'expiry_email' => [
 							'label'       => esc_html__( 'Expiry Email', 'verification-expiry-for-hivepress' ),
 							'caption'     => esc_html__( 'Email the vendor when their verified status is removed', 'verification-expiry-for-hivepress' ),
 							'description' => esc_html__( 'The email asks them to check their profile, listings and contact details and to get in touch to be verified again. Untick to remove the badge silently.', 'verification-expiry-for-hivepress' ),
 							'type'        => 'checkbox',
 							'default'     => true,
 							'_order'      => 30,
+						],
+
+						HPVE_OPTION_PREFIX . 'scope' => [
+							'label'       => esc_html__( 'Badges to Expire', 'verification-expiry-for-hivepress' ),
+							'description' => esc_html__( 'HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. "Vendor badge only" leaves listing badges exactly as HivePress manages them. "Vendor and listing badges" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now.', 'verification-expiry-for-hivepress' ),
+							'type'        => 'select',
+							'options'     => [
+								''     => esc_html__( 'Vendor badge only', 'verification-expiry-for-hivepress' ),
+								'both' => esc_html__( 'Vendor and listing badges, kept in sync', 'verification-expiry-for-hivepress' ),
+							],
+							'_order'      => 40,
 						],
 					],
 				],
@@ -488,6 +522,12 @@ final class Hpve_Verification extends Component {
 	 */
 	public function update_verified( $vendor_id, $value ) {
 		$this->request_clock( $vendor_id, $value ? 'start' : 'stop' );
+
+		// Listing badges follow the vendor's whichever way it went and whoever changed it: the
+		// hourly job, an admin ticking or unticking the box, or code saving the model.
+		if ( 'both' === $this->get_scope() ) {
+			$this->sync_listings( $vendor_id, (bool) $value );
+		}
 	}
 
 	/**
@@ -586,13 +626,36 @@ final class Hpve_Verification extends Component {
 	}
 
 	/**
-	 * Applies the clock change queued for this vendor during its edit screen save.
+	 * Counts a save_post run for the vendor being edited in.
 	 *
-	 * @param int $post_id Vendor ID.
+	 * @param int $post_id Post ID.
+	 * @return void
+	 */
+	public function enter_save( $post_id ) {
+		if ( $this->is_editing( $post_id ) ) {
+			++$this->depth;
+		}
+	}
+
+	/**
+	 * Counts a save_post run out and, once the outermost one is done, applies the queued change.
+	 *
+	 * Runs at priority 100 of the same save_post that carries core's handler at 10, so by the
+	 * time the outermost run reaches here every field on the screen has been written.
+	 *
+	 * @param int $post_id Post ID.
 	 * @return void
 	 */
 	public function flush_pending( $post_id ) {
 		$post_id = (int) $post_id;
+
+		if ( $this->is_editing( $post_id ) ) {
+			$this->depth = max( 0, $this->depth - 1 );
+
+			if ( $this->depth > 0 ) {
+				return;
+			}
+		}
 
 		if ( ! isset( $this->pending[ $post_id ] ) ) {
 			return;
@@ -726,6 +789,123 @@ final class Hpve_Verification extends Component {
 			( new Emails\Hpve_Vendor_Verification_Remind( $args ) )->send();
 		} else {
 			( new Emails\Hpve_Vendor_Verification_Expire( $args ) )->send();
+		}
+	}
+
+	/*
+	--------------------------------------------------------------------------
+	Listing badges.
+	--------------------------------------------------------------------------
+	*/
+
+	/**
+	 * Which badges this plugin manages: "vendor" (the default) or "both".
+	 *
+	 * HivePress keeps two unrelated verified flags, hp_verified on the vendor post
+	 * (models/class-vendor.php:57) and hp_verified on each listing post (models/class-listing.php:96),
+	 * each with its own checkbox in wp-admin and its own badge on the front end. This plugin's
+	 * dates live on the vendor; this setting says whether the listing flags follow.
+	 *
+	 * @return string
+	 */
+	public function get_scope() {
+		return 'both' === (string) hpve_get_option( HPVE_OPTION_PREFIX . 'scope', '' ) ? 'both' : 'vendor';
+	}
+
+	/**
+	 * Sets the verified flag on every one of the vendor's listings.
+	 *
+	 * The same statuses core's own vendor update touches (components/class-vendor.php:183-189),
+	 * and through the model so listing hooks fire as they would for an admin ticking the box.
+	 * Listings already in the wanted state are skipped, so a re-save of a vendor with fifty
+	 * listings costs fifty reads and no writes.
+	 *
+	 * @param int  $vendor_id Vendor ID.
+	 * @param bool $verified Wanted state.
+	 * @return int Listings changed.
+	 */
+	public function sync_listings( $vendor_id, $verified ) {
+		$listings = Models\Listing::query()->filter(
+			[
+				'vendor'     => $vendor_id,
+				'status__in' => [ 'auto-draft', 'draft', 'pending', 'publish' ],
+			]
+		)->get();
+
+		$changed = 0;
+
+		foreach ( $listings as $listing ) {
+			if ( (bool) $listing->is_verified() === $verified ) {
+				continue;
+			}
+
+			$listing->set_verified( $verified )->save_verified();
+
+			++$changed;
+		}
+
+		return $changed;
+	}
+
+	/**
+	 * Gives a brand-new listing its vendor's badge state, in sync mode.
+	 *
+	 * @param int    $listing_id Listing ID.
+	 * @param object $listing Listing object.
+	 * @return void
+	 */
+	public function sync_new_listing( $listing_id, $listing ) {
+		if ( 'both' !== $this->get_scope() ) {
+			return;
+		}
+
+		$vendor_id = (int) $listing->get_vendor__id();
+
+		if ( $vendor_id && $this->is_verified( $vendor_id ) && ! $listing->is_verified() ) {
+			$listing->set_verified( true )->save_verified();
+		}
+	}
+
+	/**
+	 * Brings existing listings into line when the site owner switches sync on.
+	 *
+	 * Only the additive half: listings of verified vendors gain the badge. Listings of vendors
+	 * who are NOT verified are left alone, because an admin may have verified some of those
+	 * individually on purpose, and "keep in sync from now on" is not licence to strip them.
+	 * Queued rather than run inline so the settings save returns at once on a large site.
+	 *
+	 * @param mixed $old_value Previous value.
+	 * @param mixed $value New value.
+	 * @return void
+	 */
+	public function update_scope( $old_value, $value ) {
+		if ( 'both' !== (string) $value || 'both' === (string) $old_value ) {
+			return;
+		}
+
+		$scheduler = hivepress()->scheduler;
+
+		if ( $scheduler ) {
+			$scheduler->add_action( 'hpve_sync_listing_badges' );
+		} else {
+			$this->sync_all_listings();
+		}
+	}
+
+	/**
+	 * Verifies the listings of every verified vendor.
+	 *
+	 * @return void
+	 */
+	public function sync_all_listings() {
+		if ( 'both' !== $this->get_scope() ) {
+			return;
+		}
+
+		$vendors = Models\Vendor::query()->filter( [ 'verified' => true ] )->get();
+
+		foreach ( $vendors as $vendor ) {
+			$this->sync_listings( $vendor->get_id(), true );
 		}
 	}
 

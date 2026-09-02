@@ -4,7 +4,7 @@ Tags: hivepress, vendors, verified, verification, expiry
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,6 +23,7 @@ Features:
 * The date is filled in automatically each time a vendor is verified, so re-verifying someone after their badge has expired starts the clock again with one tick of the box.
 * A reminder email a set number of days before the date, so the vendor has time to update their details. Set the number of days, or set 0 for no reminder.
 * An email when the badge is removed. Both emails can be reworded under HivePress, Emails, like any other HivePress email.
+* A choice of which badges the expiry applies to. HivePress keeps separate verified badges for vendor profiles and for listings; by default only the vendor badge is managed, or you can have every listing badge follow its vendor's, so verifying, expiry and unticking all apply to the listings too.
 * A Verification column on the Vendors screen showing who is verified, until when, and whose verification has expired.
 * Two bulk actions on the Vendors screen: apply a period to vendors you verified before installing this plugin, or remove the expiry date from vendors who should stay verified.
 * Nothing changes for vendors you do not give a date to. A vendor with no date stays verified exactly as before.
@@ -61,6 +62,10 @@ The default is used when a vendor is verified, not applied to dates already set.
 
 Yes. The Verification Period on the vendor's edit screen overrides the site default for that vendor, and "Does not expire" keeps them verified whatever the default says. You can also type or pick any date in Verified Until.
 
+= Does this affect the verified badge on listings, or only on the vendor profile? =
+
+HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. By default this plugin manages only the vendor badge and leaves listing badges exactly as HivePress does. Under HivePress, Settings, Verification Expiry, set "Badges to Expire" to "Vendor and listing badges" to make every listing badge follow its vendor's: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing that option also verifies the listings of every vendor who is verified at the time.
+
 = Can I change the wording of the emails? =
 
 Yes. Both emails appear under HivePress, Emails, where you can edit the subject and body like any other HivePress email. The tokens available are %user_name%, %vendor_name%, %vendor_url% and %expiry_date%.
@@ -70,6 +75,11 @@ Yes. Both emails appear under HivePress, Emails, where you can edit the subject 
 Deleting the plugin never removes anyone's verified status. Your settings and every vendor's dates are kept by default, even though the WordPress delete screen warns that data will be removed, so a reinstall picks up where you left off. If you want everything gone, tick "Delete all data when this plugin is deleted" on the settings tab before deleting.
 
 == Changelog ==
+
+= 1.0.2 =
+* New: a "Badges to Expire" setting. HivePress keeps separate verified badges for vendor profiles and for listings; choose "Vendor and listing badges" to make every listing badge follow its vendor's, so verifying, expiry and unticking all apply to the listings too, and a new listing from a verified vendor is verified straight away.
+* Fixed: the 1.0.1 correction did not take effect on a real site, because WordPress fires the vendor-specific save hook before the general one. The date is now filled in at the end of the general save, after every field on the screen has been written.
+* Changed: the two emails now talk about the vendor's verified status rather than a badge on their profile, since the badge may be on their listings as well.
 
 = 1.0.1 =
 * Fixed: choosing a Verification Period on the vendor edit screen and pressing Update saved the period but left Verified Until empty, so the badge would never have expired. The date is now filled in after every field on the screen has been saved.
