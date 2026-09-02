@@ -3,7 +3,7 @@
  * Plugin Name: Verification Expiry for HivePress
  * Plugin URI: https://github.com/irapidchris-del/verification-expiry-for-hivepress
  * Description: Give a vendor's verified status an expiry date, per vendor or site-wide, so vendors must keep their profile up to date to stay verified.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: ChrisB @ HivePress Community
  * Author URI: https://community.hivepress.io/u/chrisb/summary
  * Text Domain: verification-expiry-for-hivepress
@@ -22,7 +22,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Keep in step with the Version header above on every release.
-define( 'HPVE_VERSION', '1.0.0' );
+define( 'HPVE_VERSION', '1.0.1' );
 
 // The main file, for asset paths and URLs that must not depend on the installed folder name.
 define( 'HPVE_FILE', __FILE__ );

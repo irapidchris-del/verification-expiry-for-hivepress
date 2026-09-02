@@ -74,6 +74,15 @@ final class Hpve_Verification extends Component {
 	const BATCH_SIZE = 25;
 
 	/**
+	 * Clock changes requested while the vendor edit screen is saving, keyed by vendor ID.
+	 *
+	 * Values are "start", "restart" or "stop"; see request_clock() for why they wait.
+	 *
+	 * @var array<int, string>
+	 */
+	protected $pending = [];
+
+	/**
 	 * Class constructor.
 	 *
 	 * @param array $args Component arguments.
@@ -93,6 +102,10 @@ final class Hpve_Verification extends Component {
 		add_action( 'hivepress/v1/models/vendor/update_verified', [ $this, 'update_verified' ], 10, 2 );
 		add_action( 'hivepress/v1/models/vendor/update_hpve_verified_period', [ $this, 'update_period' ], 10, 2 );
 		add_action( 'hivepress/v1/models/vendor/update_hpve_verified_until', [ $this, 'update_until' ], 10, 2 );
+
+		// Apply clock changes queued during a vendor edit screen save, once core has saved every
+		// field. Priority 100 so it runs after core's own save_post handler at 10.
+		add_action( 'save_post_hp_vendor', [ $this, 'flush_pending' ], 100 );
 
 		// Revoke and remind on core's own hourly event (resources/hivepress-framework.md, "Scheduling").
 		add_action( 'hivepress/v1/events/hourly', [ $this, 'expire_vendors' ] );
@@ -230,23 +243,30 @@ final class Hpve_Verification extends Component {
 	 * Starts (or restarts) the vendor's clock from today, using whatever period applies.
 	 *
 	 * Idempotent, so it is safe to call from several hooks in one request: the result depends
-	 * only on today's date and the period. A period that resolves to "does not expire" clears
-	 * the date instead. Either way the record of an earlier expiry goes, because this is a fresh
-	 * verification, and so does the reminder marker, because a new date deserves a new reminder.
+	 * only on today's date and the period. Either way the record of an earlier expiry goes,
+	 * because this is a fresh verification, and so does the reminder marker, because a new date
+	 * deserves a new reminder.
 	 *
-	 * @param int $vendor_id Vendor ID.
-	 * @return string The date set, or an empty string when the vendor now has no expiry.
+	 * When the period resolves to "does not expire" there is no date to compute, and what
+	 * happens to any date already stored depends on who is asking. A period CHANGE to "does not
+	 * expire" clears it, because that is what the admin just asked for. A verification with no
+	 * period leaves it alone, because on the edit screen the admin may have typed a date of
+	 * their own in the same save, and wiping it would make the Verified Until field a lie.
+	 *
+	 * @param int  $vendor_id Vendor ID.
+	 * @param bool $clear Whether to clear a stored date when no period applies.
+	 * @return string The date set, or an empty string when no period applies.
 	 */
-	public function start_clock( $vendor_id ) {
+	public function start_clock( $vendor_id, $clear = true ) {
 		$until = $this->calculate_until( $this->resolve_period( $vendor_id ) );
 
 		delete_post_meta( $vendor_id, self::META_EXPIRED );
 		delete_post_meta( $vendor_id, self::META_REMINDED );
 
-		if ( '' === $until ) {
-			delete_post_meta( $vendor_id, self::META_UNTIL );
-		} else {
+		if ( '' !== $until ) {
 			update_post_meta( $vendor_id, self::META_UNTIL, $until );
+		} elseif ( $clear ) {
+			delete_post_meta( $vendor_id, self::META_UNTIL );
 		}
 
 		return $until;
@@ -462,21 +482,12 @@ final class Hpve_Verification extends Component {
 	 * code that saves the model. Core deletes the meta for an unticked box, in which case the
 	 * value arrives as null.
 	 *
-	 * On the admin edit screen core saves the meta box fields in order, so this runs BEFORE the
-	 * period field on the same form is saved. That is fine: if the period then changes,
-	 * update_period() recomputes the date a moment later, and if it does not change, the date
-	 * set here from the stored period stands.
-	 *
 	 * @param int   $vendor_id Vendor ID.
 	 * @param mixed $value New value.
 	 * @return void
 	 */
 	public function update_verified( $vendor_id, $value ) {
-		if ( $value ) {
-			$this->start_clock( $vendor_id );
-		} else {
-			$this->stop_clock( $vendor_id );
-		}
+		$this->request_clock( $vendor_id, $value ? 'start' : 'stop' );
 	}
 
 	/**
@@ -490,7 +501,7 @@ final class Hpve_Verification extends Component {
 	 */
 	public function update_period( $vendor_id, $value ) {
 		if ( $this->is_verified( $vendor_id ) ) {
-			$this->start_clock( $vendor_id );
+			$this->request_clock( $vendor_id, 'restart' );
 		}
 	}
 
@@ -506,6 +517,92 @@ final class Hpve_Verification extends Component {
 	 */
 	public function update_until( $vendor_id, $value ) {
 		delete_post_meta( $vendor_id, self::META_REMINDED );
+	}
+
+	/**
+	 * Applies a clock change now, or queues it until the vendor edit screen has finished saving.
+	 *
+	 * THE TRAP THIS EXISTS FOR, found on staging2 on 2026-09-02 with the 1.0.0 release: core's
+	 * meta box save writes the fields one at a time, in `_order` (class-admin.php:1271-1300,
+	 * core 1.7.31). Verified (20) is saved, then Verification Period (21), then Verified Until
+	 * (22). The per-field hook for the period fired, this plugin wrote the computed date, and
+	 * core then saved the form's own Verified Until input, which was EMPTY, on top of it. The
+	 * admin chose "1 year", pressed Update, and got a period with no date and a badge that would
+	 * never expire. The local harness never caught it because it wrote the meta directly and
+	 * never went through the form.
+	 *
+	 * So while that save is in progress the change is only recorded, and flush_pending() applies
+	 * it from save_post at priority 100, after core's handler at 10 has written every field.
+	 * The last request in a save wins, which is the right reading of the form: unticking the box
+	 * stops the clock whatever the period field says, and a changed period restarts it even
+	 * though ticking the box a moment earlier already started it.
+	 *
+	 * Outside that save, which is any programmatic change, a bulk action or the hourly job, the
+	 * change applies immediately, exactly as before.
+	 *
+	 * @param int    $vendor_id Vendor ID.
+	 * @param string $mode "start", "restart" or "stop".
+	 * @return void
+	 */
+	protected function request_clock( $vendor_id, $mode ) {
+		if ( $this->is_editing( $vendor_id ) ) {
+			$this->pending[ (int) $vendor_id ] = $mode;
+
+			return;
+		}
+
+		$this->apply_clock( $vendor_id, $mode );
+	}
+
+	/**
+	 * Whether core's meta box save for this vendor is running right now.
+	 *
+	 * Mirrors core's own gate for that save (class-admin.php:1245-1265: the editpost action, the
+	 * post ID, and save_post), so it is true in exactly the window where a later field write
+	 * could undo an earlier one. Core has already checked the nonce and the capability by the
+	 * time any per-field hook fires from inside it; nothing here is written from the request.
+	 *
+	 * @param int $vendor_id Vendor ID.
+	 * @return bool
+	 */
+	protected function is_editing( $vendor_id ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- read-only check of which save is running; core verified this request before its own handler wrote anything.
+		return doing_action( 'save_post' ) && isset( $_POST['action'], $_POST['post_ID'] ) && 'editpost' === $_POST['action'] && absint( $_POST['post_ID'] ) === (int) $vendor_id;
+	}
+
+	/**
+	 * Carries out one clock change.
+	 *
+	 * @param int    $vendor_id Vendor ID.
+	 * @param string $mode "start", "restart" or "stop".
+	 * @return void
+	 */
+	protected function apply_clock( $vendor_id, $mode ) {
+		if ( 'stop' === $mode ) {
+			$this->stop_clock( $vendor_id );
+		} else {
+			$this->start_clock( $vendor_id, 'restart' === $mode );
+		}
+	}
+
+	/**
+	 * Applies the clock change queued for this vendor during its edit screen save.
+	 *
+	 * @param int $post_id Vendor ID.
+	 * @return void
+	 */
+	public function flush_pending( $post_id ) {
+		$post_id = (int) $post_id;
+
+		if ( ! isset( $this->pending[ $post_id ] ) ) {
+			return;
+		}
+
+		$mode = $this->pending[ $post_id ];
+
+		unset( $this->pending[ $post_id ] );
+
+		$this->apply_clock( $post_id, $mode );
 	}
 
 	/*
