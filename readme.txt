@@ -4,7 +4,7 @@ Tags: hivepress, vendors, verified, verification, expiry
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ Yes. All three emails appear under HivePress, Emails, where you can edit the sub
 Deleting the plugin never removes anyone's verified status. Your settings and every vendor's dates are kept by default, even though the WordPress delete screen warns that data will be removed, so a reinstall picks up where you left off. If you want everything gone, tick "Delete all data when this plugin is deleted" on the settings tab before deleting.
 
 == Changelog ==
+
+= 1.1.1 =
+* Changed: on the settings tab the help icon now sits directly after each label, and its tooltip opens to the right at full width instead of being cut into a narrow strip to the left. The same placement is used across every extension in this family.
 
 = 1.1.0 =
 * New: an email to the vendor when they are marked as verified, telling them the badge now shows on their profile (and listings, in sync mode) and, when their verification has a date, when it is due for review. Editable under HivePress, Emails, and can be switched off under HivePress, Settings, Verification Expiry. Not sent for the bulk action or when only the period changes.
