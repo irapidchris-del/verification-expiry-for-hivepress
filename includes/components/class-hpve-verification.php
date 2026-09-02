@@ -96,6 +96,18 @@ final class Hpve_Verification extends Component {
 	protected $depth = 0;
 
 	/**
+	 * Vendors that have just been marked as verified and are owed the verified email, keyed by ID.
+	 *
+	 * Set by update_verified() and consumed by apply_clock(), so on the edit screen the email goes
+	 * out AFTER the queued clock change has run and can say when the verification is due for
+	 * review. Only the Verified box flipping on sets it: the bulk action and a period change
+	 * restart the clock without it, and are not announced.
+	 *
+	 * @var array<int, bool>
+	 */
+	protected $notify = [];
+
+	/**
 	 * Class constructor.
 	 *
 	 * @param array $args Component arguments.
@@ -474,6 +486,15 @@ final class Hpve_Verification extends Component {
 							'_order'      => 30,
 						],
 
+						HPVE_OPTION_PREFIX . 'verified_email' => [
+							'label'       => esc_html__( 'Verified Email', 'verification-expiry-for-hivepress' ),
+							'caption'     => esc_html__( 'Email the vendor when they are marked as verified', 'verification-expiry-for-hivepress' ),
+							'description' => esc_html__( 'Tells them the badge now shows and, when their verification has a date, when it is due for review. Not sent for the bulk action or when only the period changes.', 'verification-expiry-for-hivepress' ),
+							'type'        => 'checkbox',
+							'default'     => true,
+							'_order'      => 35,
+						],
+
 						HPVE_OPTION_PREFIX . 'scope' => [
 							'label'       => esc_html__( 'Badges to Expire', 'verification-expiry-for-hivepress' ),
 							'description' => esc_html__( 'HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. "Vendor badge only" leaves listing badges exactly as HivePress manages them. "Vendor and listing badges" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now.', 'verification-expiry-for-hivepress' ),
@@ -527,6 +548,12 @@ final class Hpve_Verification extends Component {
 	 * @return void
 	 */
 	public function update_verified( $vendor_id, $value ) {
+		if ( $value ) {
+			$this->notify[ (int) $vendor_id ] = true;
+		} else {
+			unset( $this->notify[ (int) $vendor_id ] );
+		}
+
 		$this->request_clock( $vendor_id, $value ? 'start' : 'stop' );
 
 		// Listing badges follow the vendor's whichever way it went and whoever changed it: the
@@ -624,10 +651,29 @@ final class Hpve_Verification extends Component {
 	 * @return void
 	 */
 	protected function apply_clock( $vendor_id, $mode ) {
+		$vendor_id = (int) $vendor_id;
+
 		if ( 'stop' === $mode ) {
 			$this->stop_clock( $vendor_id );
-		} else {
-			$this->start_clock( $vendor_id, 'restart' === $mode );
+
+			unset( $this->notify[ $vendor_id ] );
+
+			return;
+		}
+
+		$this->start_clock( $vendor_id, 'restart' === $mode );
+
+		// The verified email, now that the date it mentions is known.
+		if ( ! empty( $this->notify[ $vendor_id ] ) ) {
+			unset( $this->notify[ $vendor_id ] );
+
+			if ( hpve_get_option( HPVE_OPTION_PREFIX . 'verified_email', true ) ) {
+				$vendor = Models\Vendor::query()->get_by_id( $vendor_id );
+
+				if ( $vendor ) {
+					$this->send_email( 'verified', $vendor, (string) get_post_meta( $vendor_id, self::META_UNTIL, true ) );
+				}
+			}
 		}
 	}
 
@@ -763,11 +809,11 @@ final class Hpve_Verification extends Component {
 	}
 
 	/**
-	 * Sends the expiry or reminder email to the vendor's user.
+	 * Sends the verified, reminder or expiry email to the vendor's user.
 	 *
-	 * @param string $type "expire" or "remind".
+	 * @param string $type "verified", "remind" or "expire".
 	 * @param object $vendor Vendor object.
-	 * @param string $until Expiry date as Y-m-d.
+	 * @param string $until Expiry date as Y-m-d, or an empty string for none.
 	 * @return void
 	 */
 	protected function send_email( $type, $vendor, $until ) {
@@ -777,13 +823,31 @@ final class Hpve_Verification extends Component {
 			return;
 		}
 
+		$expiry_date = '' === $until ? '' : $this->format_date( $until );
+
+		// A whole sentence or nothing, so the verified email reads correctly with and without a
+		// date. The trailing space is deliberate: the default body puts this token directly in
+		// front of its next sentence.
+		$expiry_note = '';
+
+		if ( '' !== $expiry_date ) {
+			/* translators: %s: date. */
+			$expiry_note = sprintf( esc_html__( 'It is due for review on %s, so please keep your profile, listings and contact details up to date before then.', 'verification-expiry-for-hivepress' ), $expiry_date ) . ' ';
+		}
+
+		$badges = 'both' === $this->get_scope()
+			? esc_html__( 'your profile and listings', 'verification-expiry-for-hivepress' )
+			: esc_html__( 'your profile', 'verification-expiry-for-hivepress' );
+
 		$tokens = [
 			'user'        => $user,
 			'vendor'      => $vendor,
 			'user_name'   => $user->get_display_name(),
 			'vendor_name' => $vendor->get_name(),
 			'vendor_url'  => hivepress()->router->get_url( 'vendor_view_page', [ 'vendor_id' => $vendor->get_id() ] ),
-			'expiry_date' => $this->format_date( $until ),
+			'badges'      => $badges,
+			'expiry_date' => $expiry_date,
+			'expiry_note' => $expiry_note,
 		];
 
 		$args = [
@@ -791,7 +855,9 @@ final class Hpve_Verification extends Component {
 			'tokens'    => $tokens,
 		];
 
-		if ( 'remind' === $type ) {
+		if ( 'verified' === $type ) {
+			( new Emails\Hpve_Vendor_Verification_Verified( $args ) )->send();
+		} elseif ( 'remind' === $type ) {
 			( new Emails\Hpve_Vendor_Verification_Remind( $args ) )->send();
 		} else {
 			( new Emails\Hpve_Vendor_Verification_Expire( $args ) )->send();

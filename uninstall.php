@@ -118,15 +118,15 @@ function hpve_uninstall_site( $prefix ) {
 			delete_post_meta_by_key( $meta_key );
 		}
 
-		// The owner's edited versions of the two emails. HivePress keeps an edited email as an hp_email
-		// post whose slug is the email name (components/class-email.php:59-91), and with the plugin
-		// gone those two names no longer exist, so the posts would sit under HivePress > Emails
+		// The owner's edited versions of the three emails. HivePress keeps an edited email as an
+		// hp_email post whose slug is the email name (components/class-email.php:59-91), and with the
+		// plugin gone those names no longer exist, so the posts would sit under HivePress > Emails
 		// describing emails nothing can send.
 		$email_posts = get_posts(
 			[
 				'post_type'      => 'hp_email',
 				'post_status'    => 'any',
-				'post_name__in'  => [ 'hpve_vendor_verification_expire', 'hpve_vendor_verification_remind' ],
+				'post_name__in'  => [ 'hpve_vendor_verification_verified', 'hpve_vendor_verification_expire', 'hpve_vendor_verification_remind' ],
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
 			]

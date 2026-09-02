@@ -4,7 +4,7 @@ Tags: hivepress, vendors, verified, verification, expiry
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.3
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,8 +21,9 @@ Features:
 * A Verification Period and a Verified Until date on every vendor's edit screen, shown as soon as the Verified box is ticked. Choose 1 month, 3 months, 6 months or 1 year, pick a date of your own, or say that this vendor's verification does not expire.
 * A site-wide default period under HivePress, Settings, Verification Expiry, so you do not have to choose for every vendor. Each vendor can still have their own.
 * The date is filled in automatically each time a vendor is verified, so re-verifying someone after their badge has expired starts the clock again with one tick of the box.
+* An email when a vendor is marked as verified, telling them the badge now shows and, if their verification has a date, when it is due for review.
 * A reminder email a set number of days before the date, so the vendor has time to update their details. Set the number of days, or set 0 for no reminder.
-* An email when the badge is removed. Both emails can be reworded under HivePress, Emails, like any other HivePress email.
+* An email when the badge is removed. All three emails can be reworded under HivePress, Emails, like any other HivePress email, and the verified and expiry emails can each be switched off.
 * A choice of which badges the expiry applies to. HivePress keeps separate verified badges for vendor profiles and for listings; by default only the vendor badge is managed, or you can have every listing badge follow its vendor's, so verifying, expiry and unticking all apply to the listings too.
 * A Verification column on the Vendors screen showing who is verified, until when, and whose verification has expired.
 * Two bulk actions on the Vendors screen: apply a period to vendors you verified before installing this plugin, or remove the expiry date from vendors who should stay verified.
@@ -68,13 +69,16 @@ HivePress has two separate verified badges: one on the vendor profile, set by th
 
 = Can I change the wording of the emails? =
 
-Yes. Both emails appear under HivePress, Emails, where you can edit the subject and body like any other HivePress email. The tokens available are %user_name%, %vendor_name%, %vendor_url% and %expiry_date%.
+Yes. All three emails appear under HivePress, Emails, where you can edit the subject and body like any other HivePress email. The tokens available are %user_name%, %vendor_name%, %vendor_url% and %expiry_date%. The verified email also has %badges%, which reads "your profile" or "your profile and listings" depending on the Badges to Expire setting, and %expiry_note%, a ready-made sentence about the review date that is left out when the verification has no date.
 
 = Does deleting the plugin remove my settings or unverify anyone? =
 
 Deleting the plugin never removes anyone's verified status. Your settings and every vendor's dates are kept by default, even though the WordPress delete screen warns that data will be removed, so a reinstall picks up where you left off. If you want everything gone, tick "Delete all data when this plugin is deleted" on the settings tab before deleting.
 
 == Changelog ==
+
+= 1.1.0 =
+* New: an email to the vendor when they are marked as verified, telling them the badge now shows on their profile (and listings, in sync mode) and, when their verification has a date, when it is due for review. Editable under HivePress, Emails, and can be switched off under HivePress, Settings, Verification Expiry. Not sent for the bulk action or when only the period changes.
 
 = 1.0.3 =
 * Fixed: switching "Badges to Expire" to "Vendor and listing badges" on the very first save of the settings tab did not verify the listings of vendors who were already verified. WordPress adds an option the first time it is saved rather than updating it, and the plugin was only listening for updates.
