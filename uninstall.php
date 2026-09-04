@@ -111,14 +111,15 @@ function hpve_uninstall_site( $prefix ) {
 
 	if ( $delete_all ) {
 
-		// The period, expiry date, expiry record and reminder marker on every vendor. The keys are
+		// The period, expiry date, expiry record and reminder marker on every vendor and listing (the
+		// same four keys on both post types). The keys are
 		// repeated here for the same reason as the prefix: the component that defines them is not loaded.
 		// hp_verified itself is deliberately NOT in this list.
 		foreach ( [ 'hp_hpve_verified_period', 'hp_hpve_verified_until', 'hp_hpve_verified_expired_time', 'hp_hpve_reminded_until' ] as $meta_key ) {
 			delete_post_meta_by_key( $meta_key );
 		}
 
-		// The owner's edited versions of the three emails. HivePress keeps an edited email as an
+		// The owner's edited versions of the six emails. HivePress keeps an edited email as an
 		// hp_email post whose slug is the email name (components/class-email.php:59-91), and with the
 		// plugin gone those names no longer exist, so the posts would sit under HivePress > Emails
 		// describing emails nothing can send.
@@ -126,7 +127,7 @@ function hpve_uninstall_site( $prefix ) {
 			[
 				'post_type'      => 'hp_email',
 				'post_status'    => 'any',
-				'post_name__in'  => [ 'hpve_vendor_verification_verified', 'hpve_vendor_verification_expire', 'hpve_vendor_verification_remind' ],
+				'post_name__in'  => [ 'hpve_vendor_verification_verified', 'hpve_vendor_verification_expire', 'hpve_vendor_verification_remind', 'hpve_listing_verification_verified', 'hpve_listing_verification_expire', 'hpve_listing_verification_remind' ],
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
 			]

@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Verification Expiry for HivePress 1.1.0\n"
+"Project-Id-Version: Verification Expiry for HivePress 1.2.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/verification-expiry-for-hivepress\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-02T15:49:50+00:00\n"
+"POT-Creation-Date: 2026-09-04T06:24:17+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: verification-expiry-for-hivepress\n"
@@ -18,6 +18,140 @@ msgstr ""
 #: verification-expiry-for-hivepress.php
 msgid "Give a vendor's verified status an expiry date, per vendor or site-wide, so vendors must keep their profile up to date to stay verified."
 msgstr ""
+
+#. translators: %s: the period chosen under HivePress, Settings, Verification Expiry, e.g. "3 months".
+#: includes/components/class-hpve-listing-verification.php:299
+#: includes/components/class-hpve-verification.php:413
+#, php-format
+msgid "Site default (%s)"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:301
+#: includes/components/class-hpve-verification.php:415
+msgid "Site default (does not expire)"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:306
+#: includes/components/class-hpve-listing-verification.php:354
+#: includes/components/class-hpve-verification.php:421
+#: includes/components/class-hpve-verification.php:466
+msgid "Does not expire"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:309
+#: includes/components/class-hpve-verification.php:424
+msgid "Verification Period"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:310
+msgid "How long this listing's verification lasts. The date below is filled in from this each time the listing is verified, and again whenever this choice changes."
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:318
+#: includes/components/class-hpve-verification.php:433
+msgid "Verified Until"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:319
+msgid "The day after this date the listing's verified badge is removed and its owner is emailed. Pick a date of your own, or leave it to be filled in from the period above. Blank means it does not expire."
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:345
+msgid "Verified Listings"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:346
+msgid "HivePress also has a Verified box on each listing, separate from the vendor's. While \"Badges to Expire\" above is \"Vendor badge only\", each listing's verification gets its own period and date, shown under the Verified box on the listing's edit screen, and the listing's owner is emailed when it is verified, before the date and when the badge is removed. The reminder goes out the number of days before expiry set above. In sync mode listing badges follow the vendor, so these settings are not used."
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:351
+msgid "Default Listing Verification Period"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:352
+msgid "How long a listing's verification lasts unless its own edit screen says otherwise. \"Does not expire\" keeps the current HivePress behaviour, where a verified listing stays verified until you untick the box. Changing this does not move dates already set; select listings on the Listings screen and use the \"Apply verification period\" bulk action for that."
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:359
+msgid "Listing Expiry Email"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:360
+msgid "Email the listing's owner when its verified badge is removed"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:361
+msgid "The email asks them to check the listing and their contact details and to get in touch to have it verified again. Untick to remove the badge silently."
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:368
+msgid "Listing Verified Email"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:369
+msgid "Email the listing's owner when it is marked as verified"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:370
+msgid "Tells them the badge now shows on the listing and, when its verification has a date, when it is due for review. Not sent for the bulk action or when only the period changes."
+msgstr ""
+
+#. translators: %s: date.
+#: includes/components/class-hpve-listing-verification.php:659
+#, php-format
+msgid "It is due for review on %s, so please keep the listing and your contact details up to date before then."
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:782
+#: includes/components/class-hpve-listing-verification.php:787
+msgctxt "listing"
+msgid "Verification"
+msgstr ""
+
+#. translators: %s: date.
+#: includes/components/class-hpve-listing-verification.php:826
+#: includes/components/class-hpve-verification.php:1058
+#, php-format
+msgid "Verified until %s"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:829
+msgctxt "listing"
+msgid "Verified"
+msgstr ""
+
+#. translators: %s: date.
+#: includes/components/class-hpve-listing-verification.php:836
+#: includes/components/class-hpve-verification.php:1068
+#, php-format
+msgid "Expired %s"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:850
+#: includes/components/class-hpve-verification.php:1081
+msgid "Apply verification period"
+msgstr ""
+
+#: includes/components/class-hpve-listing-verification.php:851
+#: includes/components/class-hpve-verification.php:1082
+msgid "Remove expiry date"
+msgstr ""
+
+#. translators: %d: number of listings.
+#: includes/components/class-hpve-listing-verification.php:924
+#, php-format
+msgid "Expiry date set on %d verified listing. Listings that are not verified were skipped."
+msgid_plural "Expiry dates set on %d verified listings. Listings that are not verified were skipped."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of listings.
+#: includes/components/class-hpve-listing-verification.php:927
+#, php-format
+msgid "Expiry date removed from %d listing."
+msgid_plural "Expiry dates removed from %d listings."
+msgstr[0] ""
+msgstr[1] ""
 
 #: includes/components/class-hpve-verification.php:184
 msgid "1 month"
@@ -35,31 +169,8 @@ msgstr ""
 msgid "1 year"
 msgstr ""
 
-#. translators: %s: the period chosen under HivePress, Settings, Verification Expiry, e.g. "3 months".
-#: includes/components/class-hpve-verification.php:413
-#, php-format
-msgid "Site default (%s)"
-msgstr ""
-
-#: includes/components/class-hpve-verification.php:415
-msgid "Site default (does not expire)"
-msgstr ""
-
-#: includes/components/class-hpve-verification.php:421
-#: includes/components/class-hpve-verification.php:466
-msgid "Does not expire"
-msgstr ""
-
-#: includes/components/class-hpve-verification.php:424
-msgid "Verification Period"
-msgstr ""
-
 #: includes/components/class-hpve-verification.php:425
 msgid "How long each verification lasts. The date below is filled in from this each time the vendor is verified, and again whenever this choice changes."
-msgstr ""
-
-#: includes/components/class-hpve-verification.php:433
-msgid "Verified Until"
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:434
@@ -75,7 +186,7 @@ msgid "Verified Vendors"
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:458
-msgid "A verified vendor keeps the badge until the date on their profile passes; then it is removed and they are emailed to bring their details up to date. These defaults apply to every vendor unless a different period is chosen on that vendor's own edit screen. Changing the default here does not move dates already set; select vendors on the Vendors screen and use the \"Apply verification period\" bulk action for that. Both emails can be reworded under HivePress, Emails."
+msgid "A verified vendor keeps the badge until the date on their profile passes; then it is removed and they are emailed to bring their details up to date. These defaults apply to every vendor unless a different period is chosen on that vendor's own edit screen. Changing the default here does not move dates already set; select vendors on the Vendors screen and use the \"Apply verification period\" bulk action for that. All of the emails can be reworded under HivePress, Emails."
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:463
@@ -123,7 +234,7 @@ msgid "Badges to Expire"
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:500
-msgid "HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. \"Vendor badge only\" leaves listing badges exactly as HivePress manages them. \"Vendor and listing badges\" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now."
+msgid "HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. \"Vendor badge only\" leaves each listing's badge to be managed on its own, with its own period and date under the Verified Listings settings below. \"Vendor and listing badges\" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now, and clears any period and date set on individual listings."
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:503
@@ -139,7 +250,7 @@ msgid "Removing the Plugin"
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:513
-msgid "Your settings and every vendor's expiry date are kept if you delete this plugin, whatever the delete screen's generic warning says, unless you tick the box below. Deleting the plugin never removes anyone's verified status; it only stops the dates being checked."
+msgid "Your settings and every vendor's and listing's expiry date are kept if you delete this plugin, whatever the delete screen's generic warning says, unless you tick the box below. Deleting the plugin never removes anyone's verified status; it only stops the dates being checked."
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:518
@@ -147,11 +258,11 @@ msgid "Delete All Data"
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:519
-msgid "Delete this plugin's settings and vendor expiry dates when the plugin is deleted"
+msgid "Delete this plugin's settings and expiry dates when the plugin is deleted"
 msgstr ""
 
 #: includes/components/class-hpve-verification.php:520
-msgid "With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor, and your edited versions of its two emails, with no confirmation step and no undo. Vendors stay verified either way."
+msgid "With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor and listing, and your edited versions of its emails, with no confirmation step and no undo. Vendors and listings stay verified either way."
 msgstr ""
 
 #. translators: %s: date.
@@ -174,29 +285,9 @@ msgctxt "vendor"
 msgid "Verification"
 msgstr ""
 
-#. translators: %s: date.
-#: includes/components/class-hpve-verification.php:1058
-#, php-format
-msgid "Verified until %s"
-msgstr ""
-
 #: includes/components/class-hpve-verification.php:1061
 msgctxt "vendor"
 msgid "Verified"
-msgstr ""
-
-#. translators: %s: date.
-#: includes/components/class-hpve-verification.php:1068
-#, php-format
-msgid "Expired %s"
-msgstr ""
-
-#: includes/components/class-hpve-verification.php:1081
-msgid "Apply verification period"
-msgstr ""
-
-#: includes/components/class-hpve-verification.php:1082
-msgid "Remove expiry date"
 msgstr ""
 
 #. translators: %d: number of vendors.
@@ -225,6 +316,60 @@ msgstr ""
 
 #: includes/components/class-hpve-verification.php:1255
 msgid "Back to top"
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-expire.php:35
+msgid "Listing Verification Expired"
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-expire.php:36
+msgid "This email is sent to the owner of a listing when the listing's verified badge is removed because its expiry date has passed."
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-expire.php:54
+msgid "Your listing verification has expired"
+msgstr ""
+
+#. translators: 1: the owner's name, 2: the listing title, 3: the expiry date, 4: the link to the listing. All four are filled in automatically.
+#: includes/emails/class-hpve-listing-verification-expire.php:59
+#, php-format
+msgid "Hi, %1$s! The verification of your listing \"%2$s\" was due for review on %3$s and has now ended, so the verified badge no longer shows on it. Please check that the listing and your contact details are still up to date, then get in touch with us to have it verified again: %4$s"
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-remind.php:35
+msgid "Listing Verification Expiring"
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-remind.php:36
+msgid "This email is sent to the owner of a listing a set number of days before the listing's verified badge is due to be removed. The number of days is set under HivePress > Settings > Verification Expiry."
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-remind.php:54
+msgid "Your listing verification is due for review"
+msgstr ""
+
+#. translators: 1: the owner's name, 2: the listing title, 3: the expiry date, 4: the link to the listing. All four are filled in automatically.
+#: includes/emails/class-hpve-listing-verification-remind.php:59
+#, php-format
+msgid "Hi, %1$s! The verification of your listing \"%2$s\" is due for review on %3$s. Please make sure the listing and your contact details are up to date before then, so it can be renewed: %4$s"
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-verified.php:35
+msgid "Listing Verified"
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-verified.php:36
+msgid "This email is sent to the owner of a listing when the listing is marked as verified. It can be switched off under HivePress > Settings > Verification Expiry."
+msgstr ""
+
+#: includes/emails/class-hpve-listing-verification-verified.php:54
+msgid "Your listing is now verified"
+msgstr ""
+
+#. translators: 1: the owner's name, 2: the listing title, 3: a sentence about the review date, or nothing, 4: the link to the listing. All four are filled in automatically.
+#: includes/emails/class-hpve-listing-verification-verified.php:61
+#, php-format
+msgid "Hi, %1$s! Your listing \"%2$s\" has been verified, and the verified badge now shows on it. %3$sYou can see it here: %4$s"
 msgstr ""
 
 #: includes/emails/class-hpve-vendor-verification-expire.php:42
@@ -281,43 +426,60 @@ msgstr ""
 msgid "Hi, %1$s! Your profile \"%2$s\" has been verified, and the verified badge now shows on %3$s. %4$sYou can see it here: %5$s"
 msgstr ""
 
-#: includes/updater.php:669
+#: includes/updater.php:683
 msgid "See the GitHub releases page for the changelog."
 msgstr ""
 
-#: includes/updater.php:682
+#: includes/updater.php:696
+#: includes/updater.php:899
 msgid "Check for updates"
 msgstr ""
 
 #. translators: %s: version number of the new release.
-#: includes/updater.php:752
+#: includes/updater.php:766
 #, php-format
 msgid "A new version of Verification Expiry for HivePress (%s) is available."
 msgstr ""
 
-#: includes/updater.php:755
+#: includes/updater.php:769
 msgid "Verification Expiry for HivePress is up to date."
 msgstr ""
 
-#: includes/updater.php:758
+#: includes/updater.php:772
 msgid "Verification Expiry for HivePress has no releases published yet, so there is nothing to update to. This is normal for a new install and nothing is wrong."
 msgstr ""
 
-#: includes/updater.php:761
+#: includes/updater.php:775
 msgid "No releases have been published for Verification Expiry for HivePress yet, so there is nothing to update to. This is normal for a brand new copy and does not mean anything is wrong."
 msgstr ""
 
-#: includes/updater.php:764
+#: includes/updater.php:778
 msgid "GitHub limits how many update checks one server may make each hour, and this server has reached that limit. Nothing is wrong with the plugin or your site, and checking will work again within the hour."
 msgstr ""
 
-#: includes/updater.php:767
+#: includes/updater.php:781
 msgid "Could not reach GitHub to check for updates. Please try again later."
 msgstr ""
 
-#: includes/updater.php:809
+#: includes/updater.php:823
 msgid "Could not rename the update directory."
 msgstr ""
+
+#. translators: 1: number of plugins checked, 2: number with an update available.
+#: includes/updater.php:976
+#, php-format
+msgid "Checked %1$s plugin for updates: %2$s can be updated."
+msgid_plural "Checked %1$s plugins for updates: %2$s can be updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: number of plugins checked.
+#: includes/updater.php:979
+#, php-format
+msgid "Checked %s plugin for updates: it is up to date."
+msgid_plural "Checked %s plugins for updates: all are up to date."
+msgstr[0] ""
+msgstr[1] ""
 
 #: verification-expiry-for-hivepress.php:111
 msgid "Settings"

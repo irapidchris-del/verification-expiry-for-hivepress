@@ -4,7 +4,7 @@ Tags: hivepress, vendors, verified, verification, expiry
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -14,7 +14,7 @@ Give a vendor's verified status an expiry date, per vendor or site-wide, so vend
 
 HivePress lets you mark a vendor as verified, and they then stay verified until you untick the box. This plugin gives that verified status an expiry date. When the date passes, the badge is removed and the vendor is emailed to check that their profile, listings and contact details are still up to date and to get in touch to be verified again.
 
-The aim is to stop vendors setting up a profile, getting verified and then forgetting about it. A verified badge that has to be renewed is a badge that says the details behind it were checked recently.
+The aim is to stop vendors setting up a profile, getting verified and then forgetting about it. A verified badge that has to be renewed is a badge that says the details behind it were checked recently. The verified badge on each individual listing can be given a date of its own in the same way, with the same three emails going to the listing's owner.
 
 Features:
 
@@ -24,11 +24,12 @@ Features:
 * An email when a vendor is marked as verified, telling them the badge now shows and, if their verification has a date, when it is due for review.
 * A reminder email a set number of days before the date, so the vendor has time to update their details. Set the number of days, or set 0 for no reminder.
 * An email when the badge is removed. All three emails can be reworded under HivePress, Emails, like any other HivePress email, and the verified and expiry emails can each be switched off.
-* A choice of which badges the expiry applies to. HivePress keeps separate verified badges for vendor profiles and for listings; by default only the vendor badge is managed, or you can have every listing badge follow its vendor's, so verifying, expiry and unticking all apply to the listings too.
-* A Verification column on the Vendors screen showing who is verified, until when, and whose verification has expired.
-* Two bulk actions on the Vendors screen: apply a period to vendors you verified before installing this plugin, or remove the expiry date from vendors who should stay verified.
-* Nothing changes for vendors you do not give a date to. A vendor with no date stays verified exactly as before.
-* Your settings and every vendor's dates are kept if you delete the plugin, unless you tick the box that asks for them to be removed. Deleting the plugin never removes anyone's verified status.
+* The same on every listing: a Verification Period and a Verified Until date under the listing's own Verified box, a separate site default, and emails to the listing's owner when the listing is verified, before the date and when the badge is removed.
+* A choice of how the two badges relate. HivePress keeps separate verified badges for vendor profiles and for listings; by default each is managed on its own with its own dates, or you can have every listing badge follow its vendor's, so verifying, expiry and unticking all apply to the listings too.
+* A Verification column on the Vendors and Listings screens showing what is verified, until when, and which verifications have expired.
+* Two bulk actions on each of those screens: apply a period to vendors or listings you verified before installing this plugin, or remove the expiry date from those that should stay verified.
+* Nothing changes for vendors or listings you do not give a date to. One with no date stays verified exactly as before.
+* Your settings and every vendor's and listing's dates are kept if you delete the plugin, unless you tick the box that asks for them to be removed. Deleting the plugin never removes anyone's verified status.
 
 The checks run hourly through HivePress's own scheduler, so nothing needs setting up.
 
@@ -55,6 +56,10 @@ Open the vendor, tick Verified and save. The Verified Until date is filled in ag
 
 Not until you give them a date. Go to Vendors, select them, and choose the "Apply verification period" bulk action. Each vendor gets a date counted from today, using their own period if one is set and the site default otherwise. Vendors that are not verified are skipped.
 
+= Do listings expire too? =
+
+Yes, while "Badges to Expire" is left at "Vendor badge only". Tick Verified on a listing and the same Verification Period and Verified Until fields appear under it, using the default set under Verified Listings. The listing's owner is emailed when it is verified, before the date and when the badge is removed, and the Listings screen gets the same column and bulk actions as the Vendors screen. In sync mode listing badges follow the vendor instead, so the listing fields are hidden and any dates set on listings are cleared.
+
 = I changed the default period. Why did the dates not change? =
 
 The default is used when a vendor is verified, not applied to dates already set. To move existing dates to the new default, select those vendors on the Vendors screen and use the "Apply verification period" bulk action.
@@ -76,6 +81,12 @@ Yes. All three emails appear under HivePress, Emails, where you can edit the sub
 Deleting the plugin never removes anyone's verified status. Your settings and every vendor's dates are kept by default, even though the WordPress delete screen warns that data will be removed, so a reinstall picks up where you left off. If you want everything gone, tick "Delete all data when this plugin is deleted" on the settings tab before deleting.
 
 == Changelog ==
+
+= 1.2.0 =
+* New: listing verification expiry. With "Badges to Expire" left at "Vendor badge only", every listing's own Verified box now has a Verification Period and a Verified Until date under it, with a separate site default under HivePress, Settings, Verification Expiry, Verified Listings. The badge is removed on the day after the date, exactly as for vendors.
+* New: three emails to the listing's owner, when the listing is verified, a set number of days before its date, and when the badge is removed. Editable under HivePress, Emails, and the verified and expiry ones can be switched off.
+* New: a Verification column and the Apply verification period and Remove expiry date bulk actions on the Listings screen.
+* Changed: choosing "Vendor and listing badges, kept in sync" now clears any period and date set on individual listings, since in that mode listing badges follow the vendor.
 
 = 1.1.2 =
 * Fixed: updating two of these extensions one after the other could fail on the second with "up to date" until Check for updates was pressed again. WordPress rebuilds its update list after each update by asking wordpress.org first, and gives up on the whole list when that call is slow; the plugin now keeps its own update in the list regardless.

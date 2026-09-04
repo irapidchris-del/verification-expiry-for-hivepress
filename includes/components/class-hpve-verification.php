@@ -455,7 +455,7 @@ final class Hpve_Verification extends Component {
 			'sections' => [
 				HPVE_OPTION_PREFIX . 'defaults' => [
 					'title'       => esc_html__( 'Verified Vendors', 'verification-expiry-for-hivepress' ),
-					'description' => esc_html__( 'A verified vendor keeps the badge until the date on their profile passes; then it is removed and they are emailed to bring their details up to date. These defaults apply to every vendor unless a different period is chosen on that vendor\'s own edit screen. Changing the default here does not move dates already set; select vendors on the Vendors screen and use the "Apply verification period" bulk action for that. Both emails can be reworded under HivePress, Emails.', 'verification-expiry-for-hivepress' ),
+					'description' => esc_html__( 'A verified vendor keeps the badge until the date on their profile passes; then it is removed and they are emailed to bring their details up to date. These defaults apply to every vendor unless a different period is chosen on that vendor\'s own edit screen. Changing the default here does not move dates already set; select vendors on the Vendors screen and use the "Apply verification period" bulk action for that. All of the emails can be reworded under HivePress, Emails.', 'verification-expiry-for-hivepress' ),
 					'_order'      => 10,
 
 					'fields'      => [
@@ -497,7 +497,7 @@ final class Hpve_Verification extends Component {
 
 						HPVE_OPTION_PREFIX . 'scope' => [
 							'label'       => esc_html__( 'Badges to Expire', 'verification-expiry-for-hivepress' ),
-							'description' => esc_html__( 'HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. "Vendor badge only" leaves listing badges exactly as HivePress manages them. "Vendor and listing badges" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now.', 'verification-expiry-for-hivepress' ),
+							'description' => esc_html__( 'HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. "Vendor badge only" leaves each listing\'s badge to be managed on its own, with its own period and date under the Verified Listings settings below. "Vendor and listing badges" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now, and clears any period and date set on individual listings.', 'verification-expiry-for-hivepress' ),
 							'type'        => 'select',
 							'options'     => [
 								''     => esc_html__( 'Vendor badge only', 'verification-expiry-for-hivepress' ),
@@ -510,14 +510,14 @@ final class Hpve_Verification extends Component {
 
 				HPVE_OPTION_PREFIX . 'removal'  => [
 					'title'       => esc_html__( 'Removing the Plugin', 'verification-expiry-for-hivepress' ),
-					'description' => esc_html__( 'Your settings and every vendor\'s expiry date are kept if you delete this plugin, whatever the delete screen\'s generic warning says, unless you tick the box below. Deleting the plugin never removes anyone\'s verified status; it only stops the dates being checked.', 'verification-expiry-for-hivepress' ),
+					'description' => esc_html__( 'Your settings and every vendor\'s and listing\'s expiry date are kept if you delete this plugin, whatever the delete screen\'s generic warning says, unless you tick the box below. Deleting the plugin never removes anyone\'s verified status; it only stops the dates being checked.', 'verification-expiry-for-hivepress' ),
 					'_order'      => 100,
 
 					'fields'      => [
 						HPVE_OPTION_PREFIX . 'delete_data' => [
 							'label'       => esc_html__( 'Delete All Data', 'verification-expiry-for-hivepress' ),
-							'caption'     => esc_html__( 'Delete this plugin\'s settings and vendor expiry dates when the plugin is deleted', 'verification-expiry-for-hivepress' ),
-							'description' => esc_html__( 'With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor, and your edited versions of its two emails, with no confirmation step and no undo. Vendors stay verified either way.', 'verification-expiry-for-hivepress' ),
+							'caption'     => esc_html__( 'Delete this plugin\'s settings and expiry dates when the plugin is deleted', 'verification-expiry-for-hivepress' ),
+							'description' => esc_html__( 'With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor and listing, and your edited versions of its emails, with no confirmation step and no undo. Vendors and listings stay verified either way.', 'verification-expiry-for-hivepress' ),
 							'type'        => 'checkbox',
 							'_order'      => 10,
 						],
