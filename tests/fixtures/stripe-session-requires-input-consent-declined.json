@@ -1,0 +1,18 @@
+{
+  "id": "vs_test1AbC",
+  "object": "identity.verification_session",
+  "livemode": false,
+  "type": "document",
+  "client_reference_id": "hpve-101",
+  "metadata": {
+    "hpve_request_id": "101",
+    "site": "https://hivepress-dev.local"
+  },
+  "url": "https://verify.stripe.com/start/test_session_url_do_not_store",
+  "client_secret": null,
+  "last_error": {
+    "code": "consent_declined",
+    "reason": "You declined to give consent."
+  },
+  "status": "requires_input"
+}

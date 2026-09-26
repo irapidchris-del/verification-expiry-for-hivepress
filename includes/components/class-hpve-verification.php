@@ -131,9 +131,9 @@ final class Hpve_Verification extends Component {
 		// Apply clock changes queued during a vendor edit screen save, once core has saved every
 		// field. Both on the GENERIC save_post: WordPress fires save_post_{type} BEFORE save_post
 		// (wp-includes/post.php, wp_insert_post), so a flush on save_post_hp_vendor ran before
-		// core's handler had written a single field and applied nothing. That shipped in 1.0.1
-		// and was caught on staging2. Priority 1 counts the save in, priority 100 counts it out
-		// and flushes once the outermost save is done; see flush_pending() for the nesting.
+		// core's handler had written a single field and applied nothing (1.0.1). Priority 1 counts the
+		// save in, priority 100 counts it out and flushes once the outermost save is done; see
+		// flush_pending() for the nesting.
 		add_action( 'save_post', [ $this, 'enter_save' ], 1 );
 		add_action( 'save_post', [ $this, 'flush_pending' ], 100 );
 
@@ -144,10 +144,8 @@ final class Hpve_Verification extends Component {
 		// Listing badges, when the site owner has asked for them to follow the vendor's.
 		add_action( 'hivepress/v1/models/listing/create', [ $this, 'sync_new_listing' ], 10, 2 );
 		// BOTH hooks, because the first ever save of the settings tab ADDS the option rather than
-		// updating it, and WordPress fires add_option_{name} for that, never update_option_{name}
-		// (resources/wordpress-php-notes.md, "update_option() fires add_option_{name} when the
-		// option does not exist"). Found on staging2 with 1.0.2: the setting saved, the sync job was
-		// never queued, and not one listing changed.
+		// updating it, and WordPress fires add_option_{name} for that, never update_option_{name}.
+		// With only the update hook (1.0.2) the setting saved but the sync job was never queued.
 		add_action( 'update_option_hp_' . HPVE_OPTION_PREFIX . 'scope', [ $this, 'update_scope' ], 10, 2 );
 		add_action( 'add_option_hp_' . HPVE_OPTION_PREFIX . 'scope', [ $this, 'add_scope' ], 10, 2 );
 		add_action( 'hpve_sync_listing_badges', [ $this, 'sync_all_listings' ] );
@@ -231,9 +229,10 @@ final class Hpve_Verification extends Component {
 	 * verification that lasts months is not worth a second code path.
 	 *
 	 * @param string $period Period key.
+	 * @param string $from Start date as Y-m-d; today when empty.
 	 * @return string Date as Y-m-d, or an empty string for no expiry.
 	 */
-	public function calculate_until( $period ) {
+	public function calculate_until( $period, $from = '' ) {
 		$intervals = [
 			'month'   => 'P1M',
 			'quarter' => 'P3M',
@@ -245,9 +244,50 @@ final class Hpve_Verification extends Component {
 			return '';
 		}
 
-		$now = new \DateTimeImmutable( 'now', wp_timezone() );
+		$start = '' !== $from ? date_create_immutable_from_format( '!Y-m-d', $from, wp_timezone() ) : false;
 
-		return $now->add( new \DateInterval( $intervals[ $period ] ) )->format( 'Y-m-d' );
+		if ( ! $start ) {
+			$start = new \DateTimeImmutable( 'now', wp_timezone() );
+		}
+
+		return $start->add( new \DateInterval( $intervals[ $period ] ) )->format( 'Y-m-d' );
+	}
+
+	/**
+	 * Extends a verified Vendor's clock after an approved renewal.
+	 *
+	 * The new period runs from the old date when that is still ahead, so renewing during the
+	 * reminder week costs the Vendor no days; from today when the old date has already passed.
+	 * Sends the Vendor Verified email with the new date, as a first verification does.
+	 *
+	 * @param int $vendor_id Vendor ID.
+	 * @return string The new date, or an empty string when no period applies.
+	 */
+	public function extend_clock( $vendor_id ) {
+		$period = $this->resolve_period( $vendor_id );
+		$old    = (string) get_post_meta( $vendor_id, self::META_UNTIL, true );
+		$today  = $this->get_today();
+		$from   = ( '' !== $old && $old > $today ) ? $old : $today;
+		$until  = $this->calculate_until( $period, $from );
+
+		delete_post_meta( $vendor_id, self::META_EXPIRED );
+		delete_post_meta( $vendor_id, self::META_REMINDED );
+
+		if ( '' === $until ) {
+			return '';
+		}
+
+		update_post_meta( $vendor_id, self::META_UNTIL, $until );
+
+		if ( hpve_get_option( HPVE_OPTION_PREFIX . 'verified_email', true ) ) {
+			$vendor = Models\Vendor::query()->get_by_id( $vendor_id );
+
+			if ( $vendor ) {
+				$this->send_email( 'verified', $vendor, $until );
+			}
+		}
+
+		return $until;
 	}
 
 	/**
@@ -510,14 +550,14 @@ final class Hpve_Verification extends Component {
 
 				HPVE_OPTION_PREFIX . 'removal'  => [
 					'title'       => esc_html__( 'Removing the Plugin', 'verification-expiry-for-hivepress' ),
-					'description' => esc_html__( 'Your settings and every vendor\'s and listing\'s expiry date are kept if you delete this plugin, whatever the delete screen\'s generic warning says, unless you tick the box below. Deleting the plugin never removes anyone\'s verified status; it only stops the dates being checked.', 'verification-expiry-for-hivepress' ),
+					'description' => esc_html__( 'Your settings, every vendor\'s and listing\'s expiry date, and every verification request with its documents are kept if you delete this plugin, whatever the delete screen\'s generic warning says, unless you tick the box below. Deleting the plugin never removes anyone\'s verified status; it only stops the dates being checked.', 'verification-expiry-for-hivepress' ),
 					'_order'      => 100,
 
 					'fields'      => [
 						HPVE_OPTION_PREFIX . 'delete_data' => [
 							'label'       => esc_html__( 'Delete All Data', 'verification-expiry-for-hivepress' ),
 							'caption'     => esc_html__( 'Delete this plugin\'s settings and expiry dates when the plugin is deleted', 'verification-expiry-for-hivepress' ),
-							'description' => esc_html__( 'With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor and listing, and your edited versions of its emails, with no confirmation step and no undo. Vendors and listings stay verified either way.', 'verification-expiry-for-hivepress' ),
+							'description' => esc_html__( 'With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor and listing, every verification request with its documents, files, history and private folder, and your edited versions of its emails, with no confirmation step and no undo. Vendors and listings stay verified either way.', 'verification-expiry-for-hivepress' ),
 							'type'        => 'checkbox',
 							'_order'      => 10,
 						],
@@ -595,14 +635,12 @@ final class Hpve_Verification extends Component {
 	/**
 	 * Applies a clock change now, or queues it until the vendor edit screen has finished saving.
 	 *
-	 * THE TRAP THIS EXISTS FOR, found on staging2 on 2026-09-02 with the 1.0.0 release: core's
-	 * meta box save writes the fields one at a time, in `_order` (class-admin.php:1271-1300,
-	 * core 1.7.31). Verified (20) is saved, then Verification Period (21), then Verified Until
-	 * (22). The per-field hook for the period fired, this plugin wrote the computed date, and
-	 * core then saved the form's own Verified Until input, which was EMPTY, on top of it. The
-	 * admin chose "1 year", pressed Update, and got a period with no date and a badge that would
-	 * never expire. The local harness never caught it because it wrote the meta directly and
-	 * never went through the form.
+	 * THE TRAP THIS EXISTS FOR: core's meta box save writes the fields one at a time, in `_order`
+	 * (hivepress/includes/components/class-admin.php, core 1.7.31): Verified (20), Verification
+	 * Period (21), then Verified Until (22). The per-field hook for the period wrote the computed
+	 * date, and core then saved the form's own EMPTY Verified Until input on top of it, leaving a
+	 * period with no date and a badge that never expired. A test that writes meta directly never
+	 * goes through the form, so it cannot catch this.
 	 *
 	 * So while that save is in progress the change is only recorded, and flush_pending() applies
 	 * it from save_post at priority 100, after core's handler at 10 has written every field.
@@ -839,15 +877,24 @@ final class Hpve_Verification extends Component {
 			? esc_html__( 'your profile and listings', 'verification-expiry-for-hivepress' )
 			: esc_html__( 'your profile', 'verification-expiry-for-hivepress' );
 
+		$vendor_url = hivepress()->router->get_url( 'vendor_view_page', [ 'vendor_id' => $vendor->get_id() ] );
+
+		// Where an early renewal starts (2.1.0). Falls back to the profile when requests are off,
+		// because the account page does not exist then.
+		$verification_url = hivepress()->hpve_request && hivepress()->hpve_request->is_enabled()
+			? hivepress()->router->get_url( 'hpve_verification_page' )
+			: $vendor_url;
+
 		$tokens = [
-			'user'        => $user,
-			'vendor'      => $vendor,
-			'user_name'   => $user->get_display_name(),
-			'vendor_name' => $vendor->get_name(),
-			'vendor_url'  => hivepress()->router->get_url( 'vendor_view_page', [ 'vendor_id' => $vendor->get_id() ] ),
-			'badges'      => $badges,
-			'expiry_date' => $expiry_date,
-			'expiry_note' => $expiry_note,
+			'user'             => $user,
+			'vendor'           => $vendor,
+			'user_name'        => $user->get_display_name(),
+			'vendor_name'      => $vendor->get_name(),
+			'vendor_url'       => $vendor_url,
+			'verification_url' => $verification_url,
+			'badges'           => $badges,
+			'expiry_date'      => $expiry_date,
+			'expiry_note'      => $expiry_note,
 		];
 
 		$args = [
@@ -1040,6 +1087,17 @@ final class Hpve_Verification extends Component {
 			echo '&mdash;';
 		} else {
 			echo esc_html( $text );
+		}
+
+		// The second line: the state of the Vendor's verification request, when there is one.
+		$review = hivepress()->hpve_review;
+
+		if ( $review ) {
+			$line = $review->get_vendor_column_line( $post_id );
+
+			if ( '' !== $line ) {
+				echo '<br>' . $line; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside get_vendor_column_line().
+			}
 		}
 	}
 
@@ -1253,6 +1311,22 @@ final class Hpve_Verification extends Component {
 					'jumpTo'    => esc_html__( 'Jump to a section:', 'verification-expiry-for-hivepress' ),
 					'save'      => esc_html__( 'Save Changes', 'verification-expiry-for-hivepress' ),
 					'backToTop' => esc_html__( 'Back to top', 'verification-expiry-for-hivepress' ),
+
+					// The document type cards.
+					'newType'   => esc_html__( 'New document type', 'verification-expiry-for-hivepress' ),
+					'off'       => esc_html__( 'off', 'verification-expiry-for-hivepress' ),
+					'required'  => esc_html__( 'required', 'verification-expiry-for-hivepress' ),
+
+					'fields'    => [
+						'key'       => esc_html__( 'Key', 'verification-expiry-for-hivepress' ),
+						'label'     => esc_html__( 'Name', 'verification-expiry-for-hivepress' ),
+						'help'      => esc_html__( 'Help sentence', 'verification-expiry-for-hivepress' ),
+						'enabled'   => esc_html__( 'Enabled', 'verification-expiry-for-hivepress' ),
+						'required'  => esc_html__( 'Required', 'verification-expiry-for-hivepress' ),
+						'formats'   => esc_html__( 'File types', 'verification-expiry-for-hivepress' ),
+						'max_mb'    => esc_html__( 'Size limit per file (MB)', 'verification-expiry-for-hivepress' ),
+						'max_files' => esc_html__( 'Files allowed', 'verification-expiry-for-hivepress' ),
+					],
 				],
 			]
 		);

@@ -337,12 +337,10 @@
 	border-right-color: rgba(0, 0, 0, 0.75);
 }
 
-/* Tooltip placement, house rule (Chris, 2026-09-02). The help icon sits directly after the label
- * text, not at the far end of the label cell where core's justify-content: space-between puts it,
- * and the bubble opens to the RIGHT at 300px. Core anchors the bubble to the left of the icon at
- * 173px (hivepress/assets/css/backend.min.css, .hp-tooltip__text), which puts it under the admin
- * menu whenever the icon is early in the row and turns two sentences into a tall ribbon. The same
- * block sits in every extension with a settings tab; fix it in one and sweep the rest. */
+/* Tooltip placement, shared by every extension with a settings tab (sweep the siblings).
+ * The help icon sits right after the label text and the bubble opens to the RIGHT at 300px.
+ * Core anchors it left of the icon at 173px (hivepress/assets/css/backend.min.css,
+ * .hp-tooltip__text), which puts it under the admin menu and makes a tall ribbon. */
 .hp-page .hp-form--table th > div {
 	justify-content: flex-start;
 	gap: 6px;
@@ -363,4 +361,214 @@
 	left: -8px;
 	border-left-color: transparent;
 	border-right-color: rgba(0, 0, 0, 0.75);
+}
+
+/* ==========================================================================
+ * DOCUMENT TYPE CARDS (settings tab)
+ *
+ * The house card (resources/hivepress-settings.md, "The settings card is the
+ * house style"): each repeater row is drawn as a white card with a header bar
+ * that folds it. Copied in shape from Account Menu Enhancer's repeater cards
+ * with the hpve prefix; the fields are moved, never rebuilt, so they post
+ * exactly as core rendered them. backend.js adds tr.hpve-card and the head.
+ * ======================================================================== */
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card {
+	display: block;
+	position: relative;
+	margin-bottom: 16px;
+	padding: 46px 20px 20px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #fff;
+}
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card > td {
+	display: block;
+	width: 100%;
+	margin: 0 0 12px;
+	padding: 0;
+	border: 0;
+}
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card > td:has(> [data-sort]) {
+	display: none;
+}
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card > td:last-child {
+	position: absolute;
+	top: 8px;
+	inset-inline-end: 14px;
+	width: auto;
+	margin: 0;
+}
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card > td.hpve-card-head {
+	position: absolute;
+	top: 8px;
+	inset-inline-start: 14px;
+	inset-inline-end: 52px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	width: auto;
+	margin: 0;
+	height: 30px;
+	overflow: hidden;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.hpve-card-toggle {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 26px;
+	height: 26px;
+	padding: 0;
+	border: 0;
+	border-radius: 3px;
+	background: transparent;
+	color: #50575e;
+	cursor: pointer;
+}
+
+.hpve-card-toggle:hover,
+.hpve-card-toggle:focus {
+	color: #2271b1;
+}
+
+.hpve-card-name {
+	overflow: hidden;
+	font-size: 13px;
+	font-weight: 600;
+	color: #1d2327;
+	text-overflow: ellipsis;
+}
+
+.hpve-card-badge {
+	font-size: 11px;
+	font-weight: 400;
+	color: #50575e;
+}
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card--collapsed {
+	padding-bottom: 6px;
+}
+
+div[data-component="repeater"] table.hp-table > tbody > tr.hpve-card--collapsed > td:not(:last-child):not(.hpve-card-head) {
+	display: none;
+}
+
+.hpve-field-label {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+/* ==========================================================================
+ * REVIEW SCREEN (Verifications)
+ *
+ * wp-admin is a px UI on a 13px base, so these follow the host rather than the
+ * front-end rem scale. The pills borrow the list table's own status colours.
+ * ======================================================================== */
+
+.hpve-pill {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	background: #f0f0f1;
+	color: #1d2327;
+	font-size: 12px;
+	line-height: 1.6;
+}
+
+.hpve-pill--pending {
+	background: #fcf9e8;
+	color: #6d5a00;
+}
+
+.hpve-pill--approved {
+	background: #edfaef;
+	color: #007017;
+}
+
+.hpve-pill--closed {
+	background: #f6f7f7;
+	color: #50575e;
+}
+
+.hpve-decision__summary {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 16px;
+}
+
+.hpve-decision__block {
+	margin: 16px 0 0;
+	padding-top: 16px;
+	border-top: 1px solid #f0f0f1;
+}
+
+.hpve-decision__block textarea {
+	margin-bottom: 8px;
+}
+
+.hpve-doc-type h4 {
+	margin: 16px 0 6px;
+}
+
+.hpve-doc {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	margin-bottom: 12px;
+}
+
+.hpve-doc__preview {
+	display: block;
+	max-width: 320px;
+	max-height: 320px;
+	width: auto;
+	height: auto;
+	border: 1px solid #dcdcde;
+	border-radius: 3px;
+	background: #f6f7f7;
+}
+
+.hpve-doc__meta {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.hpve-doc-note {
+	margin: 16px 0;
+	padding: 8px 12px;
+	border-left: 4px solid #dcdcde;
+	background: #f6f7f7;
+}
+
+.hpve-documents__delete {
+	margin-top: 12px;
+}
+
+#titlediv .hpve-title-locked input {
+	pointer-events: none;
+	background: #f6f7f7;
+}
+
+@media screen and (max-width: 782px) {
+	.hpve-doc {
+		flex-direction: column;
+	}
+
+	.hpve-doc__preview {
+		max-width: 100%;
+	}
 }

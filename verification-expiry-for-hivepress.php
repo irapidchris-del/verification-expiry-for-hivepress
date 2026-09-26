@@ -2,8 +2,8 @@
 /**
  * Plugin Name: Verification Expiry for HivePress
  * Plugin URI: https://github.com/irapidchris-del/verification-expiry-for-hivepress
- * Description: Give a vendor's verified status an expiry date, per vendor or site-wide, so vendors must keep their profile up to date to stay verified.
- * Version: 1.2.0
+ * Description: Verification requests with private documents, a review queue, paid verification and five check providers, plus badge expiry dates.
+ * Version: 2.1.2
  * Author: ChrisB @ HivePress Community
  * Author URI: https://community.hivepress.io/u/chrisb/summary
  * Text Domain: verification-expiry-for-hivepress
@@ -22,7 +22,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Keep in step with the Version header above on every release.
-define( 'HPVE_VERSION', '1.2.0' );
+define( 'HPVE_VERSION', '2.1.2' );
 
 // The main file, for asset paths and URLs that must not depend on the installed folder name.
 define( 'HPVE_FILE', __FILE__ );
@@ -37,10 +37,73 @@ define( 'HPVE_FILE', __FILE__ );
  */
 define( 'HPVE_OPTION_PREFIX', 'verification_expiry_for_hivepress_' );
 
+/**
+ * The capability that lets a user see the Verifications queue and open a document.
+ *
+ * The default is edit_others_posts, the same bar as HivePress's own upload permission
+ * (hivepress/includes/controllers/class-attachment.php:148): Editors, Administrators and, on a
+ * WooCommerce site, Shop Managers. A site whose Editors must not see identity documents can raise
+ * it with the filter from a small plugin or mu-plugin, for example to manage_options. Resolved once
+ * here because the post type's capability array (includes/configs/post-types.php) needs a plain
+ * string at registration time.
+ */
+if ( ! defined( 'HPVE_REVIEW_CAP' ) ) {
+	$hpve_review_cap = sanitize_key( (string) apply_filters( 'hpve_verification_review_capability', 'edit_others_posts' ) );
+
+	define( 'HPVE_REVIEW_CAP', '' !== $hpve_review_cap ? $hpve_review_cap : 'edit_others_posts' );
+
+	unset( $hpve_review_cap );
+}
+
 // Set up updates from GitHub releases.
 require_once __DIR__ . '/includes/updater.php';
 
 Verification_Expiry\Updater\bootstrap( __FILE__ );
+
+/*
+ * The pure logic classes and the providers live outside the HivePress namespace, so core's class
+ * glob (class-core.php:364, core 1.7.31) never instantiates them, and they are loaded here by hand.
+ * The logic files have no WordPress calls and are what tests/logic-tests.php drives.
+ */
+require_once __DIR__ . '/includes/logic/class-hpve-request-state.php';
+require_once __DIR__ . '/includes/logic/class-hpve-document-types.php';
+require_once __DIR__ . '/includes/logic/class-hpve-payment-rules.php';
+require_once __DIR__ . '/includes/logic/class-hpve-path.php';
+require_once __DIR__ . '/includes/logic/class-hpve-stripe-signature.php';
+require_once __DIR__ . '/includes/logic/class-hpve-stripe-mapper.php';
+require_once __DIR__ . '/includes/logic/class-hpve-registry-mapper.php';
+require_once __DIR__ . '/includes/logic/class-hpve-plain-signature.php';
+require_once __DIR__ . '/includes/logic/class-hpve-hosted-mapper.php';
+require_once __DIR__ . '/includes/providers/interface-hpve-provider.php';
+require_once __DIR__ . '/includes/providers/class-hpve-stripe-http.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-manual.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-stripe.php';
+require_once __DIR__ . '/includes/providers/class-hpve-registry-http.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-registry.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-companies-house.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-vat.php';
+require_once __DIR__ . '/includes/providers/class-hpve-hosted-http.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-hosted.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-persona.php';
+require_once __DIR__ . '/includes/providers/class-hpve-provider-complycube.php';
+
+/**
+ * Flushes the permalinks on activation, and asks for a second flush on the next request.
+ *
+ * 2.0.0 adds page routes. Core's own flush is delete_option( 'rewrite_rules' )
+ * (components/class-router.php:503-505); the flag makes the request component flush again once the
+ * router has registered the routes, and the version option covers an update done by copying files
+ * (resources/hivepress-framework.md, "An activation-only flush is not enough").
+ *
+ * @return void
+ */
+function hpve_activate() {
+	delete_option( 'rewrite_rules' );
+
+	update_option( 'hp_' . HPVE_OPTION_PREFIX . 'flush', '1', false );
+}
+
+register_activation_hook( __FILE__, 'hpve_activate' );
 
 /**
  * Registers the extension.

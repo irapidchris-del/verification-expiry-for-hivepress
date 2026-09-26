@@ -3,6 +3,7 @@
 	<description>HivePress coding standards.</description>
 
 	<exclude-pattern>vendor/*</exclude-pattern>
+	<exclude-pattern>tests/*</exclude-pattern>
 
 	<rule ref="WordPress">
 		<exclude name="WordPress.PHP.StrictInArray.MissingTrueStrict"/>

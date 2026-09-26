@@ -1,0 +1,13 @@
+{
+  "id": "evt_testother001",
+  "object": "event",
+  "type": "payment_intent.succeeded",
+  "livemode": false,
+  "created": 1757145600,
+  "data": {
+    "object": {
+      "id": "pi_123",
+      "object": "payment_intent"
+    }
+  }
+}

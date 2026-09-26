@@ -2,44 +2,308 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Verification Expiry for HivePress 1.2.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/verification-expiry-for-hivepress\n"
+"Project-Id-Version: Verification Expiry for HivePress 2.1.1\n"
+"Report-Msgid-Bugs-To: https://github.com/irapidchris-del/verification-expiry-for-hivepress/issues\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-04T06:24:17+00:00\n"
+"POT-Creation-Date: 2026-09-24T12:04:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: verification-expiry-for-hivepress\n"
 
 #. Description of the plugin
 #: verification-expiry-for-hivepress.php
-msgid "Give a vendor's verified status an expiry date, per vendor or site-wide, so vendors must keep their profile up to date to stay verified."
+msgid "Verification requests with private documents, a review queue, paid verification and five check providers, plus badge expiry dates."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:41
+#: includes/controllers/class-hpve-request.php:114
+#: includes/controllers/class-hpve-request.php:122
+#: includes/templates/class-hpve-verification-page.php:56
+#: templates/hpve-request/card.php:20
+#: templates/hpve-request/guest.php:13
+#: templates/hpve-request/return.php:13
+msgid "Verification"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:45
+msgid "Mode"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:52
+msgid "Status and form"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:53
+msgid "Status and button"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:135
+msgid "Or send your documents to us instead:"
+msgstr ""
+
+#. translators: %d: number of working days.
+#: includes/blocks/class-hpve-verification.php:176
+#: includes/components/class-hpve-request.php:1282
+#, php-format
+msgid "usually within %d working day"
+msgid_plural "usually within %d working days"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: number of days.
+#: includes/blocks/class-hpve-verification.php:205
+#, php-format
+msgid "Your documents are private: only you and the site's reviewers can open them, and they are deleted %d days after a decision."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:207
+msgid "Your documents are private: only you and the site's reviewers can open them."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:212
+msgid "Verification is for Vendors with a profile on this site. Add your first Listing to create your profile, then come back here."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:214
+msgid "Add a Listing"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:221
+#: includes/blocks/class-hpve-verification.php:357
+msgid "Not started"
+msgstr ""
+
+#. translators: %s: a phrase such as ", usually within 3 working days" or nothing.
+#: includes/blocks/class-hpve-verification.php:223
+#, php-format
+msgid "A verified badge on your profile shows clients that we have checked who you are. Upload the documents below and we will review them%s."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:226
+msgid "Want a faster review? Paid requests are looked at first."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:228
+#: includes/blocks/class-hpve-verification.php:240
+#: includes/blocks/class-hpve-verification.php:333
+msgid "Buy verification"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:236
+msgid "Payment needed"
+msgstr ""
+
+#. translators: 1: the price, 2: a phrase such as ", usually within 3 working days" or nothing.
+#: includes/blocks/class-hpve-verification.php:238
+#, php-format
+msgid "Verification costs %1$s. Pay once, then upload your documents and we will review them%2$s."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:247
+#: includes/components/class-hpve-review.php:94
+msgid "Pending review"
+msgstr ""
+
+#. translators: %s: a phrase such as ", usually within 3 working days" or nothing.
+#: includes/blocks/class-hpve-verification.php:249
+#, php-format
+msgid "Thanks, we have your documents. We will email you when the review is done%s. You cannot change your documents while they are being reviewed."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:252
+#: includes/components/class-hpve-request.php:1693
+#: includes/components/class-hpve-review.php:214
+msgid "Submitted"
+msgstr ""
+
+#. translators: %s: the order number.
+#: includes/blocks/class-hpve-verification.php:257
+#: includes/components/class-hpve-review.php:147
+#: includes/components/class-hpve-review.php:213
+#: includes/components/class-hpve-review.php:306
+msgid "Paid"
+msgstr ""
+
+#. translators: %s: the order number.
+#: includes/blocks/class-hpve-verification.php:257
+#, php-format
+msgid "order #%s"
+msgstr ""
+
+#. translators: %s: the order number.
+#: includes/blocks/class-hpve-verification.php:257
+msgid "yes"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:260
+#: includes/components/class-hpve-request.php:1302
+msgid "Paid requests are reviewed first."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:266
+#: includes/components/class-hpve-review.php:95
+#: templates/hpve-request/return.php:14
+msgid "Being checked"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:267
+msgid "Stripe is checking your document. This normally takes a few minutes and we will email you when it is done."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:271
+msgid "More information needed"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:272
+msgid "We looked at your documents but need something more before we can approve you:"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:274
+msgid "Update your documents below and send them again."
+msgstr ""
+
+#. translators: %s: date.
+#: includes/blocks/class-hpve-verification.php:278
+#: templates/hpve-request/admin/applicant.php:42
+msgid "Verified"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:279
+msgid "Your profile is verified and the badge is showing."
+msgstr ""
+
+#. translators: 1: a date, 2: number of days.
+#: includes/blocks/class-hpve-verification.php:288
+#, php-format
+msgid "Your verification is due for review on %1$s, and we will email you %2$d days before."
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/blocks/class-hpve-verification.php:291
+#, php-format
+msgid "Your verification is due for review on %s."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:294
+msgid "It does not expire."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:298
+#: includes/components/class-hpve-review.php:97
+#: includes/components/class-hpve-review.php:325
+msgid "Approved"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:303
+msgid "View your profile"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:310
+msgid "Your documents have been deleted."
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/blocks/class-hpve-verification.php:313
+#, php-format
+msgid "Your documents will be deleted on %s."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:319
+#: includes/components/class-hpve-request.php:622
+msgid "Renewal due"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:319
+msgid "Renewing"
+msgstr ""
+
+#. translators: 1: a date, 2: a phrase such as ", usually within 3 working days" or nothing.
+#: includes/blocks/class-hpve-verification.php:324
+#, php-format
+msgid "Your verification is due for review on %1$s. Upload up-to-date documents below and we will review them%2$s. Your badge stays on while we do, and a renewal adds a full period from that date, so renewing early loses nothing."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:327
+msgid "Due for review"
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/blocks/class-hpve-verification.php:341
+#: includes/components/class-hpve-review.php:98
+#: includes/components/class-hpve-review.php:180
+#: includes/components/class-hpve-review.php:354
+msgid "Not approved"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:342
+msgid "We could not verify you this time:"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:344
+msgid "You can apply again with different documents below. If you think this is a mistake, please contact us."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:348
+#: includes/components/class-hpve-request.php:620
+#: includes/components/class-hpve-review.php:99
+#: includes/components/class-hpve-review.php:355
+msgid "Expired"
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/blocks/class-hpve-verification.php:353
+#, php-format
+msgid "Your verification expired on %s and the badge has been removed. Upload your documents again below to get it back."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:358
+msgid "Your Stripe check was cancelled. You can start again below."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:368
+msgid " and take a selfie"
+msgstr ""
+
+#. translators: %s: " and take a selfie" or nothing.
+#: includes/blocks/class-hpve-verification.php:371
+#, php-format
+msgid "You will be taken to Stripe's secure page to photograph your ID%s. It takes about two minutes and you come straight back here."
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:374
+msgid "Start verification with Stripe"
+msgstr ""
+
+#: includes/blocks/class-hpve-verification.php:388
+#: templates/hpve-request/cta.php:19
+msgid "Get verified"
 msgstr ""
 
 #. translators: %s: the period chosen under HivePress, Settings, Verification Expiry, e.g. "3 months".
 #: includes/components/class-hpve-listing-verification.php:299
-#: includes/components/class-hpve-verification.php:413
+#: includes/components/class-hpve-verification.php:455
 #, php-format
 msgid "Site default (%s)"
 msgstr ""
 
 #: includes/components/class-hpve-listing-verification.php:301
-#: includes/components/class-hpve-verification.php:415
+#: includes/components/class-hpve-verification.php:457
 msgid "Site default (does not expire)"
 msgstr ""
 
 #: includes/components/class-hpve-listing-verification.php:306
 #: includes/components/class-hpve-listing-verification.php:354
-#: includes/components/class-hpve-verification.php:421
-#: includes/components/class-hpve-verification.php:466
+#: includes/components/class-hpve-verification.php:463
+#: includes/components/class-hpve-verification.php:508
 msgid "Does not expire"
 msgstr ""
 
 #: includes/components/class-hpve-listing-verification.php:309
-#: includes/components/class-hpve-verification.php:424
+#: includes/components/class-hpve-verification.php:466
 msgid "Verification Period"
 msgstr ""
 
@@ -48,7 +312,7 @@ msgid "How long this listing's verification lasts. The date below is filled in f
 msgstr ""
 
 #: includes/components/class-hpve-listing-verification.php:318
-#: includes/components/class-hpve-verification.php:433
+#: includes/components/class-hpve-verification.php:475
 msgid "Verified Until"
 msgstr ""
 
@@ -102,43 +366,44 @@ msgstr ""
 msgid "It is due for review on %s, so please keep the listing and your contact details up to date before then."
 msgstr ""
 
-#: includes/components/class-hpve-listing-verification.php:782
-#: includes/components/class-hpve-listing-verification.php:787
+#: includes/components/class-hpve-listing-verification.php:785
+#: includes/components/class-hpve-listing-verification.php:790
 msgctxt "listing"
 msgid "Verification"
 msgstr ""
 
 #. translators: %s: date.
-#: includes/components/class-hpve-listing-verification.php:826
-#: includes/components/class-hpve-verification.php:1058
+#: includes/components/class-hpve-listing-verification.php:829
+#: includes/components/class-hpve-verification.php:1120
+#: templates/hpve-request/admin/applicant.php:42
 #, php-format
 msgid "Verified until %s"
 msgstr ""
 
-#: includes/components/class-hpve-listing-verification.php:829
+#: includes/components/class-hpve-listing-verification.php:832
 msgctxt "listing"
 msgid "Verified"
 msgstr ""
 
 #. translators: %s: date.
-#: includes/components/class-hpve-listing-verification.php:836
-#: includes/components/class-hpve-verification.php:1068
+#: includes/components/class-hpve-listing-verification.php:839
+#: includes/components/class-hpve-verification.php:1130
 #, php-format
 msgid "Expired %s"
 msgstr ""
 
-#: includes/components/class-hpve-listing-verification.php:850
-#: includes/components/class-hpve-verification.php:1081
+#: includes/components/class-hpve-listing-verification.php:853
+#: includes/components/class-hpve-verification.php:1143
 msgid "Apply verification period"
 msgstr ""
 
-#: includes/components/class-hpve-listing-verification.php:851
-#: includes/components/class-hpve-verification.php:1082
+#: includes/components/class-hpve-listing-verification.php:854
+#: includes/components/class-hpve-verification.php:1144
 msgid "Remove expiry date"
 msgstr ""
 
 #. translators: %d: number of listings.
-#: includes/components/class-hpve-listing-verification.php:924
+#: includes/components/class-hpve-listing-verification.php:927
 #, php-format
 msgid "Expiry date set on %d verified listing. Listings that are not verified were skipped."
 msgid_plural "Expiry dates set on %d verified listings. Listings that are not verified were skipped."
@@ -146,12 +411,883 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of listings.
-#: includes/components/class-hpve-listing-verification.php:927
+#: includes/components/class-hpve-listing-verification.php:930
 #, php-format
 msgid "Expiry date removed from %d listing."
 msgid_plural "Expiry dates removed from %d listings."
 msgstr[0] ""
 msgstr[1] ""
+
+#: includes/components/class-hpve-payment.php:372
+msgid "Subscription active again."
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/components/class-hpve-payment.php:423
+#, php-format
+msgid "Renewal paid, verified until %s."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:424
+msgid "Renewal paid; the verification does not expire."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:436
+msgid "Renewal paid, but the Vendor is not verified, so there was nothing to extend."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:474
+msgid "Choose a WooCommerce product and Vendors see a Buy button; a paid request is marked Paid and sorted first in the queue. Payment never approves anybody: documents are still checked. Use a virtual, non-downloadable product whose author is an administrator without a Vendor profile, so the order is not credited to a Vendor as a sale. A subscription renewal restarts the verification period; a refund is recorded on the request but never removes a badge. Guest checkout cannot be linked to an account, so require an account for this product."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:477
+msgid "WooCommerce is not active, so these settings do nothing until it is."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:482
+msgid "Verification Product"
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:483
+msgid "The product a Vendor buys for a one-off verification. The list is loaded fresh each time this tab opens. Leave blank for free verification only."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:493
+msgid "Subscription Product"
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:494
+msgid "Optional. A subscription product whose renewals restart the verification period. Leave blank if verification is not a subscription."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:501
+msgid "A subscription product can be chosen once WooCommerce Subscriptions is active."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:505
+msgid "Payment Required"
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:506
+msgid "Vendors must pay before they can send documents"
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:507
+msgid "With this ticked and a product chosen, an unpaid Vendor sees a Buy button instead of the form. Unticked, payment is optional and only affects the queue order."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:513
+msgid "Paid First"
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:514
+msgid "Sort paid requests to the top of the queue"
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:515
+msgid "Paid requests are also marked Paid in the list either way."
+msgstr ""
+
+#: includes/components/class-hpve-payment.php:522
+msgid "Paid Verification"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:348
+msgid "Reviewers are users who can edit other people's posts (Editors, Administrators and, on WooCommerce sites, Shop Managers). A developer can change that with the hpve_verification_review_capability filter."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:353
+#: includes/components/class-hpve-provider.php:359
+msgid "Verification Requests"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:354
+msgid "Vendors apply from the Verification page in their account, or from any page carrying the Verification block or the [hivepress_hpve_verification] shortcode. Requests land under Verifications in the admin menu. Approving one ticks the Verified box on the Vendor, so the period, reminder and expiry settings above apply from that moment."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:360
+msgid "Let Vendors apply for verification"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:361
+msgid "Switches the account page, the block and the \"Get verified\" prompt on or off. Existing requests are kept either way."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:368
+msgid "Typical review time (working days)"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:369
+msgid "Shown to applicants as \"usually within N working days\". Set 0 to leave that sentence out."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:378
+msgid "Text above the form"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:379
+msgid "Optional wording of your own shown above the document form, for example which certificate you accept. Plain text; leave blank for none."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:387
+msgid "Applicant Emails"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:388
+msgid "Email applicants when their request is received, needs more information or is not approved"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:389
+msgid "The approval email is the existing Vendor Verified email. The \"now send your documents\" email after a payment is always sent. All of them can be reworded under HivePress, Emails."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:396
+msgid "New Request Email"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:397
+msgid "Email the site address when a request is sent for review"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:398
+msgid "Goes to the email address under Settings, General. Untick if you check the Verifications screen regularly."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:413
+#: includes/components/class-hpve-review.php:212
+#: includes/components/class-hpve-review.php:595
+msgid "Documents"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:419
+msgid "Document Types"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:420
+msgid "One row per document you ask for. The key is a short name for storage and cannot change once files exist for it; the name and help sentence are what applicants read. Only JPG, PNG, WEBP and PDF can ever be accepted."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:422
+msgid "Add document type"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:427
+#: includes/components/class-hpve-verification.php:1325
+msgid "Key"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:428
+msgid "Lower-case letters, numbers and underscores, 2 to 32 characters, for example photo_id."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:437
+#: includes/components/class-hpve-verification.php:1326
+msgid "Name"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:445
+#: includes/components/class-hpve-verification.php:1327
+msgid "Help sentence"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:446
+msgid "Shown under the field, for example which documents count."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:453
+#: includes/components/class-hpve-verification.php:1328
+msgid "Enabled"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:454
+msgid "Ask for this document"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:460
+#: includes/components/class-hpve-verification.php:1329
+msgid "Required"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:461
+msgid "Applicants must upload this before sending"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:467
+#: includes/components/class-hpve-verification.php:1330
+msgid "File types"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:475
+#: includes/components/class-hpve-verification.php:1331
+msgid "Size limit per file (MB)"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:483
+#: includes/components/class-hpve-verification.php:1332
+msgid "Files allowed"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:493
+msgid "Delete documents after (days)"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:494
+msgid "Counted from the decision. The files are deleted; the request and its history are kept. Set 0 to keep documents until you delete them by hand."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:503
+msgid "Documents with Automated Checks"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:504
+msgid "Still collect documents when an automated check is the provider"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:505
+msgid "With Stripe Identity chosen below, tick this to keep the document form as well, for example for insurance certificates that Stripe cannot check."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:527
+msgid "Automated Checks"
+msgstr ""
+
+#. translators: 1: the webhook address, 2: the gateway status line, 3: any set-up notices.
+#: includes/components/class-hpve-provider.php:530
+#, php-format
+msgid "Manual review means a person reads the documents under Verifications. Stripe Identity sends the applicant to Stripe to photograph their ID and uses the WooCommerce Stripe gateway's key in whichever mode the gateway is in; Stripe charges a fee per completed check. Add a webhook in your Stripe Dashboard pointing at %1$s for the identity.verification_session events and paste its signing secret below. Companies House and the VAT number check are free and are set up in the next section; they confirm that a business exists and that its registered name matches, which is not the same as proving who the account holder is.%2$s%3$s"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:539
+msgid "Provider"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:540
+msgid "Applies to new attempts. If the chosen provider is not fully set up, manual review is used until it is."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:548
+msgid "Selfie"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:549
+msgid "Ask Stripe to match a selfie to the ID photo"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:550
+msgid "Stronger, and the price Stripe quotes for document plus selfie applies."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:557
+msgid "Webhook signing secret (test)"
+msgstr ""
+
+#. translators: %s: the webhook address.
+#: includes/components/class-hpve-provider.php:559
+#, php-format
+msgid "From Stripe Dashboard, Developers, Webhooks, in test mode, for the endpoint %s."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:568
+msgid "Webhook signing secret (live)"
+msgstr ""
+
+#. translators: %s: the webhook address.
+#: includes/components/class-hpve-provider.php:570
+#, php-format
+msgid "The same, from the live-mode endpoint for %s. Used when the gateway is in live mode."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:579
+msgid "Attempts per request"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:580
+msgid "After this many failed Stripe checks the request is marked not approved with the reason Stripe gave, and the document form is offered instead."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:589
+#: includes/components/class-hpve-provider.php:632
+msgid "Admin Sign-off"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:590
+msgid "A verified Stripe result waits for an admin to approve it"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:591
+msgid "Unticked, a passed check ticks the Verified box straight away. Ticked, the request stays pending and the site address is emailed."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:597
+msgid "Redact at Stripe"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:598
+msgid "Ask Stripe to redact the session when documents are deleted here"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:599
+msgid "Removes the images and personal details Stripe holds, on the same day the retention setting above deletes documents here. Redaction cannot be undone."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:607
+msgid "Free Business Registers"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:608
+msgid "Two checks that cost nothing per lookup. Choose one of them as the Provider above to use it. The applicant types a company number or a VAT number instead of uploading anything, and the register is asked whether that business exists, whether it is still trading and what name is on it. Both prove a business, not a person: someone could type a real company number that is not theirs, so pair them with documents or with an identity provider if that matters on your site. Sole traders below the VAT threshold have neither number, so do not make one of these the only route to a badge unless every Vendor of yours is a registered business."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:613
+msgid "Companies House API key"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:614
+msgid "Free. Register at developer.company-information.service.gov.uk, create an application, then copy its API key here. The VAT number check needs no key at all."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:623
+msgid "Name Match"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:624
+msgid "The registered name must match the Vendor name"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:625
+msgid "Ticked, a number registered to a different name is sent back to the applicant to correct rather than approved. Endings such as Ltd and Limited are ignored when comparing, so \"Ivy Lane Hair\" matches \"IVY LANE HAIR LTD\". Untick it if your Vendors trade under names that differ from their registered ones."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:633
+msgid "A passed register check waits for an admin to approve it"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:634
+msgid "Unticked, a match ticks the Verified box straight away. Ticked, the request stays pending and the site address is emailed. A company the register lists as in liquidation or administration always waits for a person, whichever way this is set."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:645
+msgid "Other Identity Services"
+msgstr ""
+
+#. translators: 1: the Persona webhook address, 2: the ComplyCube webhook address, 3: the ComplyCube key status line.
+#: includes/components/class-hpve-provider.php:648
+#, php-format
+msgid "Two alternatives to Stripe Identity, for sites that would rather not add Stripe or want a cheaper price per check. Both send the applicant to the service's own page and both charge per completed check, so read their pricing before you switch one on. Persona has a free allowance for low volumes; ComplyCube is UK based and its key decides the mode, a key starting test_ being their sandbox. Add a webhook at each service pointing at its own address here: Persona %1$s, ComplyCube %2$s.%3$s"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:657
+msgid "Persona API key"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:658
+msgid "From the Persona Dashboard, API Keys. Leave empty if you are not using Persona."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:667
+msgid "Persona inquiry template"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:668
+msgid "The template id, starting itmpl_. That template must have \"Create a one-time link\" switched on, or applicants have nowhere to go and every check stops before it starts."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:675
+msgid "Persona webhook secret"
+msgstr ""
+
+#. translators: %s: the webhook address.
+#: includes/components/class-hpve-provider.php:677
+#, php-format
+msgid "From the Persona webhook you created for %s. Without it a result can only arrive if the applicant returns to the site, so it is required rather than optional."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:686
+msgid "Persona sign-off"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:687
+msgid "A passed Persona check waits for an admin to approve it"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:688
+msgid "A result Persona marks for review always waits for a person, whichever way this is set."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:694
+msgid "ComplyCube API key"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:695
+msgid "From your ComplyCube dashboard. A key starting test_ uses their sandbox, where nothing is charged and no result is real; live_ runs for real. Leave empty if you are not using ComplyCube."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:704
+msgid "ComplyCube workflow"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:705
+msgid "The workflow template id, from Workflows in their dashboard. It decides which checks an applicant is asked to complete."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:712
+msgid "ComplyCube webhook secret"
+msgstr ""
+
+#. translators: %s: the webhook address.
+#: includes/components/class-hpve-provider.php:714
+#, php-format
+msgid "From the ComplyCube webhook you created for %s. Required, for the same reason as Persona's."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:723
+msgid "ComplyCube sign-off"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:724
+msgid "A passed ComplyCube check waits for an admin to approve it"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:725
+msgid "An outcome of \"attention\", which means their checks found something worth reading, always waits for a person whichever way this is set."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:761
+msgid "Note: a customised \"Verification Page\" template is published under HivePress, Templates, so that page shows the template's content instead of the card and form."
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:898
+msgid "Show"
+msgstr ""
+
+#: includes/components/class-hpve-provider.php:899
+msgid "Hide"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:188
+msgid "Photo ID"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:188
+msgid "A passport, driving licence or national identity card. The name must match your profile."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:189
+msgid "Qualification certificate"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:189
+msgid "A certificate or diploma for the work you offer."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:190
+msgid "Insurance certificate"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:190
+msgid "Your current public liability or professional insurance certificate."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:191
+msgid "Proof of address"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:191
+msgid "A utility bill or bank statement from the last three months."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:228
+#: includes/forms/class-hpve-request-submit.php:80
+msgid "Select files"
+msgstr ""
+
+#. translators: %s: the applicant's display name.
+#: includes/components/class-hpve-request.php:396
+#, php-format
+msgid "Verification request: %s"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:418
+msgid "Request created. An earlier request for this applicant is in the trash."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:418
+msgid "Request created."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:616
+#: includes/components/class-hpve-review.php:324
+msgid "Pending"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:618
+msgid "Action needed"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:703
+msgid "Documents sent again for review."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:703
+msgid "Documents sent for review."
+msgstr ""
+
+#. translators: %s: the reviewer's name.
+#: includes/components/class-hpve-request.php:727
+#, php-format
+msgid "More information requested by %s."
+msgstr ""
+
+#. translators: %s: the reviewer's name.
+#: includes/components/class-hpve-request.php:745
+#, php-format
+msgid "Not approved by %s."
+msgstr ""
+
+#. translators: %s: the reviewer's name.
+#: includes/components/class-hpve-request.php:762
+#, php-format
+msgid "Approved by %s."
+msgstr ""
+
+#. translators: %s: the reviewer's name.
+#: includes/components/class-hpve-request.php:773
+#, php-format
+msgid "Re-opened for review by %s."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:795
+msgid "Renewal started. The badge stays on while the new documents are reviewed."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:804
+msgid "Verification expired and the badge was removed."
+msgstr ""
+
+#. translators: %s: the person's name.
+#: includes/components/class-hpve-request.php:813
+#, php-format
+msgid "Verified box unticked by %s."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:821
+msgid "The automated check was cancelled."
+msgstr ""
+
+#. translators: %s: the person's name.
+#: includes/components/class-hpve-request.php:830
+#: includes/components/class-hpve-request.php:1177
+#, php-format
+msgid "Moved to the trash by %s."
+msgstr ""
+
+#. translators: %s: the order number.
+#: includes/components/class-hpve-request.php:847
+#, php-format
+msgid "Paid, order #%s."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:860
+msgid "Payment refunded. Verification is not affected."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:860
+msgid "Order cancelled or failed. Verification is not affected."
+msgstr ""
+
+#. translators: %s: the subscription number.
+#: includes/components/class-hpve-request.php:881
+#, php-format
+msgid "Subscription #%s active."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:894
+msgid "Subscription status changed. Verification is not affected until it expires."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1050
+#: includes/components/class-hpve-review.php:271
+msgid "System"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1067
+#: includes/components/class-hpve-request.php:1560
+msgid "Scheduled job"
+msgstr ""
+
+#. translators: %s: the person's name.
+#: includes/components/class-hpve-request.php:1184
+#, php-format
+msgid "Restored from the trash by %s."
+msgstr ""
+
+#. translators: 1: old status, 2: new status, 3: the person's name.
+#: includes/components/class-hpve-request.php:1198
+#, php-format
+msgid "Status changed from %1$s to %2$s by %3$s outside the review screen."
+msgstr ""
+
+#. translators: %s: the person's name.
+#: includes/components/class-hpve-request.php:1237
+#, php-format
+msgid "Approved by %s ticking the Verified box on the Vendor."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1299
+msgid "This is a paid request, so it should be reviewed first."
+msgstr ""
+
+#. translators: %s: today's date.
+#: includes/components/class-hpve-request.php:1607
+#, php-format
+msgid "Your documents were deleted on %s as part of routine housekeeping."
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1628
+#: includes/components/class-hpve-request.php:1643
+#: includes/components/class-hpve-request.php:1681
+msgid "Verification requests"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1685
+#: includes/components/class-hpve-review.php:211
+msgid "Status"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1689
+msgid "Created"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1697
+msgid "Reviewed"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1701
+msgid "Note from the reviewer"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1705
+msgid "Reason given"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1709
+msgid "Your note"
+msgstr ""
+
+#: includes/components/class-hpve-request.php:1713
+msgid "Documents held"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:92
+msgid "Draft"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:93
+msgid "Awaiting payment"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:96
+#: includes/components/class-hpve-review.php:176
+#: includes/components/class-hpve-review.php:353
+msgid "Needs information"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:100
+msgid "Cancelled"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:101
+msgid "No Vendor"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:137
+#: includes/components/class-hpve-review.php:185
+msgid "Refunded"
+msgstr ""
+
+#. translators: %s: the subscription number.
+#: includes/components/class-hpve-review.php:142
+#: templates/hpve-request/admin/payment.php:26
+#, php-format
+msgid "Subscription #%s"
+msgstr ""
+
+#. translators: %s: the order number.
+#: includes/components/class-hpve-review.php:147
+#, php-format
+msgid "Paid, order #%s"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:150
+msgid "Free"
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/components/class-hpve-review.php:173
+#, php-format
+msgid "Request pending since %s"
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/components/class-hpve-review.php:173
+msgid "Request pending"
+msgstr ""
+
+#. translators: %s: a date.
+#: includes/components/class-hpve-review.php:180
+#, php-format
+msgid "Not approved %s"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:210
+#: includes/components/class-hpve-review.php:597
+msgid "Applicant"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:215
+msgid "Reviewed by"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:242
+msgid "No Vendor profile yet"
+msgstr ""
+
+#. translators: 1: number of document types with a file, 2: number of document types.
+#: includes/components/class-hpve-review.php:254
+#, php-format
+msgid "%1$d of %2$d types"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:326
+msgid "Needs action"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:352
+msgid "All requests"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:356
+msgid "Paid only"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:446
+msgid "Review"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:451
+#: includes/components/class-hpve-review.php:470
+#: templates/hpve-request/admin/decision.php:52
+msgid "Approve"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:452
+#: templates/hpve-request/admin/decision.php:74
+#: templates/hpve-request/admin/decision.php:76
+msgid "Reject"
+msgstr ""
+
+#. translators: 1: the applicant's name, 2: a date.
+#: includes/components/class-hpve-review.php:539
+#, php-format
+msgid "Approved. %1$s is now verified until %2$s."
+msgstr ""
+
+#. translators: 1: the applicant's name, 2: a date.
+#: includes/components/class-hpve-review.php:539
+#, php-format
+msgid "Approved. %s is now verified."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:542
+msgid "The applicant has been asked for more information."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:545
+msgid "The request was not approved and the applicant has been told why."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:548
+msgid "The request is open for review again."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:551
+msgid "The documents have been deleted."
+msgstr ""
+
+#. translators: 1: number approved, 2: number skipped.
+#: includes/components/class-hpve-review.php:557
+#, php-format
+msgid "%1$d request(s) approved, %2$d skipped (not pending, no Vendor profile, or not yours to approve)."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:561
+msgid "This applicant has no Vendor profile yet, so there is no Verified box to tick. Ask them to add a Listing first."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:565
+msgid "A reason is needed before a request can be rejected; it is sent to the applicant."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:569
+msgid "That decision is not possible in the request's current state. Reload the page to see it."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:594
+msgid "Decision"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:596
+msgid "History"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:600
+msgid "Payment"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:640
+#: includes/configs/post-types.php:53
+msgid "Verification request"
+msgstr ""
+
+#: includes/components/class-hpve-review.php:682
+msgid "You are not allowed to review this request."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:760
+msgid "You are not allowed to change this request."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:798
+msgid "A verification request from this Vendor is pending. Decide it under Verifications rather than ticking the Verified box here; ticking still works and is recorded as an approval."
+msgstr ""
+
+#: includes/components/class-hpve-review.php:798
+msgid "Open the request"
+msgstr ""
+
+#: includes/components/class-hpve-storage.php:306
+msgid "No folder for documents could be created. Check that the uploads folder is writable, or set the HPVE_PRIVATE_DIR constant in wp-config.php to a writable folder outside the web root."
+msgstr ""
+
+#. translators: %s: the folder path.
+#: includes/components/class-hpve-storage.php:311
+#, php-format
+msgid "Documents are stored outside the folder your web server publishes (%s). Only this plugin can read them, through a download link that checks who you are first."
+msgstr ""
+
+#: includes/components/class-hpve-storage.php:314
+msgid "Documents are stored inside the uploads folder, in a folder with a random name and a deny rule. On many hosts (any nginx or proxy host) that rule is not enforced, so the download link's sign-in check is the only protection. Ask your host for a folder outside the web root and set the HPVE_PRIVATE_DIR constant in wp-config.php to use it."
+msgstr ""
+
+#: includes/components/class-hpve-storage.php:361
+msgid "Documents cannot be stored right now. Please contact us."
+msgstr ""
+
+#. translators: 1: the reviewer's name, 2: the document's name.
+#: includes/components/class-hpve-storage.php:682
+#, php-format
+msgid "%1$s viewed the document \"%2$s\"."
+msgstr ""
 
 #: includes/components/class-hpve-verification.php:184
 msgid "1 month"
@@ -169,129 +1305,129 @@ msgstr ""
 msgid "1 year"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:425
+#: includes/components/class-hpve-verification.php:467
 msgid "How long each verification lasts. The date below is filled in from this each time the vendor is verified, and again whenever this choice changes."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:434
+#: includes/components/class-hpve-verification.php:476
 msgid "The day after this date the verified status is removed and the vendor is emailed. Pick a date of your own, or leave it to be filled in from the period above. Blank means it does not expire."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:452
+#: includes/components/class-hpve-verification.php:494
 msgid "Verification Expiry"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:457
+#: includes/components/class-hpve-verification.php:499
 msgid "Verified Vendors"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:458
+#: includes/components/class-hpve-verification.php:500
 msgid "A verified vendor keeps the badge until the date on their profile passes; then it is removed and they are emailed to bring their details up to date. These defaults apply to every vendor unless a different period is chosen on that vendor's own edit screen. Changing the default here does not move dates already set; select vendors on the Vendors screen and use the \"Apply verification period\" bulk action for that. All of the emails can be reworded under HivePress, Emails."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:463
+#: includes/components/class-hpve-verification.php:505
 msgid "Default Verification Period"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:464
+#: includes/components/class-hpve-verification.php:506
 msgid "How long a verification lasts unless the vendor's own edit screen says otherwise. \"Does not expire\" keeps the current HivePress behaviour, where a verified vendor stays verified until you untick the box."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:471
+#: includes/components/class-hpve-verification.php:513
 msgid "Reminder (days before expiry)"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:472
+#: includes/components/class-hpve-verification.php:514
 msgid "Email the vendor this many days before their verified status ends, so they can update their details in time. Set 0 to send no reminder."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:481
+#: includes/components/class-hpve-verification.php:523
 msgid "Expiry Email"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:482
+#: includes/components/class-hpve-verification.php:524
 msgid "Email the vendor when their verified status is removed"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:483
+#: includes/components/class-hpve-verification.php:525
 msgid "The email asks them to check their profile, listings and contact details and to get in touch to be verified again. Untick to remove the badge silently."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:490
+#: includes/components/class-hpve-verification.php:532
 msgid "Verified Email"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:491
+#: includes/components/class-hpve-verification.php:533
 msgid "Email the vendor when they are marked as verified"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:492
+#: includes/components/class-hpve-verification.php:534
 msgid "Tells them the badge now shows and, when their verification has a date, when it is due for review. Not sent for the bulk action or when only the period changes."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:499
+#: includes/components/class-hpve-verification.php:541
 msgid "Badges to Expire"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:500
+#: includes/components/class-hpve-verification.php:542
 msgid "HivePress has two separate verified badges: one on the vendor profile, set by the Verified box on the vendor, and one on each listing, set by the Verified box on that listing. \"Vendor badge only\" leaves each listing's badge to be managed on its own, with its own period and date under the Verified Listings settings below. \"Vendor and listing badges\" makes every listing badge follow the vendor: verifying a vendor verifies all their listings, expiry or unticking removes all of them, and a new listing from a verified vendor is verified straight away. Choosing it also verifies the listings of every vendor who is verified right now, and clears any period and date set on individual listings."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:503
+#: includes/components/class-hpve-verification.php:545
 msgid "Vendor badge only"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:504
+#: includes/components/class-hpve-verification.php:546
 msgid "Vendor and listing badges, kept in sync"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:512
+#: includes/components/class-hpve-verification.php:554
 msgid "Removing the Plugin"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:513
-msgid "Your settings and every vendor's and listing's expiry date are kept if you delete this plugin, whatever the delete screen's generic warning says, unless you tick the box below. Deleting the plugin never removes anyone's verified status; it only stops the dates being checked."
+#: includes/components/class-hpve-verification.php:555
+msgid "Your settings, every vendor's and listing's expiry date, and every verification request with its documents are kept if you delete this plugin, whatever the delete screen's generic warning says, unless you tick the box below. Deleting the plugin never removes anyone's verified status; it only stops the dates being checked."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:518
+#: includes/components/class-hpve-verification.php:560
 msgid "Delete All Data"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:519
+#: includes/components/class-hpve-verification.php:561
 msgid "Delete this plugin's settings and expiry dates when the plugin is deleted"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:520
-msgid "With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor and listing, and your edited versions of its emails, with no confirmation step and no undo. Vendors and listings stay verified either way."
+#: includes/components/class-hpve-verification.php:562
+msgid "With this ticked, deleting the plugin also removes every setting on this page, the period and expiry date stored on each vendor and listing, every verification request with its documents, files, history and private folder, and your edited versions of its emails, with no confirmation step and no undo. Vendors and listings stay verified either way."
 msgstr ""
 
 #. translators: %s: date.
-#: includes/components/class-hpve-verification.php:835
+#: includes/components/class-hpve-verification.php:877
 #, php-format
 msgid "It is due for review on %s, so please keep your profile, listings and contact details up to date before then."
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:839
+#: includes/components/class-hpve-verification.php:881
 msgid "your profile and listings"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:840
+#: includes/components/class-hpve-verification.php:882
 msgid "your profile"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:1014
-#: includes/components/class-hpve-verification.php:1019
+#: includes/components/class-hpve-verification.php:1065
+#: includes/components/class-hpve-verification.php:1070
 msgctxt "vendor"
 msgid "Verification"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:1061
+#: includes/components/class-hpve-verification.php:1123
 msgctxt "vendor"
 msgid "Verified"
 msgstr ""
 
 #. translators: %d: number of vendors.
-#: includes/components/class-hpve-verification.php:1156
+#: includes/components/class-hpve-verification.php:1218
 #, php-format
 msgid "Expiry date set on %d verified vendor. Vendors that are not verified were skipped."
 msgid_plural "Expiry dates set on %d verified vendors. Vendors that are not verified were skipped."
@@ -299,23 +1435,169 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of vendors.
-#: includes/components/class-hpve-verification.php:1159
+#: includes/components/class-hpve-verification.php:1221
 #, php-format
 msgid "Expiry date removed from %d vendor."
 msgid_plural "Expiry dates removed from %d vendors."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/components/class-hpve-verification.php:1253
+#: includes/components/class-hpve-verification.php:1315
 msgid "Jump to a section:"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:1254
+#: includes/components/class-hpve-verification.php:1316
 msgid "Save Changes"
 msgstr ""
 
-#: includes/components/class-hpve-verification.php:1255
+#: includes/components/class-hpve-verification.php:1317
 msgid "Back to top"
+msgstr ""
+
+#: includes/components/class-hpve-verification.php:1320
+msgid "New document type"
+msgstr ""
+
+#: includes/components/class-hpve-verification.php:1321
+msgid "off"
+msgstr ""
+
+#: includes/components/class-hpve-verification.php:1322
+msgid "required"
+msgstr ""
+
+#: includes/configs/post-types.php:52
+#: includes/configs/post-types.php:58
+msgid "Verifications"
+msgstr ""
+
+#: includes/configs/post-types.php:54
+msgctxt "verification request"
+msgid "Add New"
+msgstr ""
+
+#: includes/configs/post-types.php:55
+#: includes/configs/post-types.php:57
+msgid "Add Verification Request"
+msgstr ""
+
+#: includes/configs/post-types.php:56
+msgid "Review Verification Request"
+msgstr ""
+
+#: includes/configs/post-types.php:59
+msgid "Search Verification Requests"
+msgstr ""
+
+#: includes/configs/post-types.php:60
+#: includes/configs/post-types.php:61
+msgid "No verification requests found."
+msgstr ""
+
+#: includes/configs/scripts.php:25
+msgid "Remove this file?"
+msgstr ""
+
+#: includes/configs/scripts.php:26
+msgid "Sorry, that took too long. Please try again in a minute."
+msgstr ""
+
+#: includes/configs/scripts.php:27
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:238
+msgid "This request has been submitted and cannot be changed."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:242
+#: includes/controllers/class-hpve-request.php:443
+msgid "Payment is needed before documents can be sent."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:259
+msgid "The file could not be uploaded. Please try again."
+msgstr ""
+
+#. translators: %s: a file size such as 10 MB.
+#: includes/controllers/class-hpve-request.php:266
+#: includes/fields/class-hpve-document-upload.php:180
+#, php-format
+msgid "The file size must not exceed %s."
+msgstr ""
+
+#. translators: %s: file extensions.
+#: includes/controllers/class-hpve-request.php:279
+#, php-format
+msgid "Only %s files are allowed."
+msgstr ""
+
+#. translators: %s: number of files.
+#: includes/controllers/class-hpve-request.php:286
+#: includes/fields/class-hpve-document-upload.php:182
+#, php-format
+msgid "Only up to %s files can be uploaded for this document."
+msgstr ""
+
+#. translators: 1: the document type, 2: a file size such as 1.2 MB.
+#: includes/controllers/class-hpve-request.php:320
+#, php-format
+msgid "Uploaded a %1$s (%2$s)."
+msgstr ""
+
+#. translators: %s: the document type.
+#: includes/controllers/class-hpve-request.php:386
+#, php-format
+msgid "Removed a %s."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:439
+#: includes/controllers/class-hpve-request.php:557
+msgid "This request has already been sent for review."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:453
+msgid "Documents are not collected on this site. Please use the automated check."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:465
+msgid "Please confirm the documents are yours and agree to them being checked."
+msgstr ""
+
+#. translators: %s: a list of document types.
+#: includes/controllers/class-hpve-request.php:472
+#, php-format
+msgid "Please upload the following before sending: %s."
+msgstr ""
+
+#. translators: %s: the reference field's label, e.g. "Company number".
+#: includes/controllers/class-hpve-request.php:495
+#, php-format
+msgid "Please check the %s: it is not in a form we can look up."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:517
+msgid "The request could not be sent. Please reload the page and try again."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:561
+msgid "Payment is needed before the check can start."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:567
+msgid "Automated checks are not available on this site."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:573
+msgid "You have used all your attempts at the automated check. Please send your documents to us instead."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:579
+msgid "Please wait a minute before trying again."
+msgstr ""
+
+#: includes/controllers/class-hpve-request.php:595
+msgid "The check could not be started. Please reload the page and try again."
 msgstr ""
 
 #: includes/emails/class-hpve-listing-verification-expire.php:35
@@ -372,6 +1654,121 @@ msgstr ""
 msgid "Hi, %1$s! Your listing \"%2$s\" has been verified, and the verified badge now shows on it. %3$sYou can see it here: %4$s"
 msgstr ""
 
+#: includes/emails/class-hpve-request-needs-info.php:32
+msgid "Verification Needs More Information"
+msgstr ""
+
+#: includes/emails/class-hpve-request-needs-info.php:33
+msgid "This email is sent to a Vendor when a reviewer needs something more before their verification can be approved."
+msgstr ""
+
+#: includes/emails/class-hpve-request-needs-info.php:51
+msgid "Your verification needs more information"
+msgstr ""
+
+#. translators: 1: the applicant's name, 2: the note the reviewer wrote, 3: the link to the Verification page. All three are filled in automatically.
+#: includes/emails/class-hpve-request-needs-info.php:55
+#, php-format
+msgid "Hi, %1$s! We looked at your documents but need something more before we can approve you: %2$s Please update your documents and send them again here: %3$s"
+msgstr ""
+
+#: includes/emails/class-hpve-request-paid.php:33
+msgid "Verification Paid"
+msgstr ""
+
+#: includes/emails/class-hpve-request-paid.php:34
+msgid "This email is sent to a buyer when an order containing the verification product is paid, asking them to send their documents."
+msgstr ""
+
+#: includes/emails/class-hpve-request-paid.php:52
+msgid "Thanks for your payment, now send your documents"
+msgstr ""
+
+#. translators: 1: the buyer's name, 2: the order number, 3: a sentence about paid requests being reviewed first or nothing, 4: the link to the Verification page. All four are filled in automatically.
+#: includes/emails/class-hpve-request-paid.php:56
+#, php-format
+msgid "Hi, %1$s! Thanks for your payment (order #%2$s). %3$s The next step is to upload your documents so we can check them: %4$s"
+msgstr ""
+
+#: includes/emails/class-hpve-request-received.php:32
+msgid "Verification Request Received"
+msgstr ""
+
+#: includes/emails/class-hpve-request-received.php:33
+msgid "This email is sent to the site email address when a Vendor sends a verification request for review."
+msgstr ""
+
+#: includes/emails/class-hpve-request-received.php:34
+#: includes/emails/class-hpve-request-signoff.php:35
+msgid "Site owner"
+msgstr ""
+
+#. translators: %s: the Vendor's name, filled in automatically.
+#: includes/emails/class-hpve-request-received.php:53
+#, php-format
+msgid "New verification request from %s"
+msgstr ""
+
+#. translators: 1: the Vendor's name, 2: the applicant's account name, 3: a sentence about payment or nothing, 4: the link to the review screen. All four are filled in automatically.
+#: includes/emails/class-hpve-request-received.php:59
+#, php-format
+msgid "A verification request from \"%1$s\" (%2$s) is waiting for review. %3$s Review it here: %4$s"
+msgstr ""
+
+#: includes/emails/class-hpve-request-rejected.php:32
+msgid "Verification Not Approved"
+msgstr ""
+
+#: includes/emails/class-hpve-request-rejected.php:33
+msgid "This email is sent to a Vendor when their verification request is not approved, with the reason."
+msgstr ""
+
+#: includes/emails/class-hpve-request-rejected.php:51
+msgid "Your verification was not approved"
+msgstr ""
+
+#. translators: 1: the applicant's name, 2: the reason the reviewer gave, 3: the link to the Verification page. All three are filled in automatically.
+#: includes/emails/class-hpve-request-rejected.php:55
+#, php-format
+msgid "Hi, %1$s! We could not verify you this time: %2$s You can apply again with different documents here, and if you think this is a mistake please contact us: %3$s"
+msgstr ""
+
+#: includes/emails/class-hpve-request-signoff.php:33
+msgid "Verification Awaiting Sign-off"
+msgstr ""
+
+#: includes/emails/class-hpve-request-signoff.php:34
+msgid "This email is sent to the site email address when an automated identity check has passed and a person must confirm it before the badge shows."
+msgstr ""
+
+#: includes/emails/class-hpve-request-signoff.php:52
+msgid "A verified request is waiting for your approval"
+msgstr ""
+
+#. translators: 1: the applicant's name, 2: the link to the review screen. Both are filled in automatically.
+#: includes/emails/class-hpve-request-signoff.php:56
+#, php-format
+msgid "The automated identity check for %1$s has passed. Because sign-off is switched on, the badge will not show until you approve the request here: %2$s"
+msgstr ""
+
+#: includes/emails/class-hpve-request-submitted.php:36
+msgid "Verification Request Submitted"
+msgstr ""
+
+#: includes/emails/class-hpve-request-submitted.php:37
+msgid "This email is sent to a Vendor when their verification documents have been sent for review."
+msgstr ""
+
+#: includes/emails/class-hpve-request-submitted.php:55
+msgid "We have received your verification documents"
+msgstr ""
+
+#. translators: 1: the applicant's name, 2: a phrase such as ", usually within 3 working days" or nothing, 3: the link to the Verification page. All three are filled in automatically.
+#: includes/emails/class-hpve-request-submitted.php:59
+#, php-format
+msgid "Hi, %1$s! Thanks, we have your documents and will review them%2$s. We will email you as soon as the review is done. You can check on it here: %3$s"
+msgstr ""
+
 #: includes/emails/class-hpve-vendor-verification-expire.php:42
 msgid "Vendor Verification Expired"
 msgstr ""
@@ -398,14 +1795,20 @@ msgstr ""
 msgid "This email is sent to a vendor a set number of days before their verified status ends. The number of days is set under HivePress > Settings > Verification Expiry."
 msgstr ""
 
-#: includes/emails/class-hpve-vendor-verification-remind.php:54
-msgid "Your verified status is due for review"
+#. translators: 1: the vendor's name, 2: their profile name, 3: the expiry date, 4: the link to the verification page in their account. All four are filled in automatically.
+#: includes/emails/class-hpve-vendor-verification-remind.php:61
+#, php-format
+msgid "Hi, %1$s! Your verified status for \"%2$s\" is due for review on %3$s. You can renew it now: upload up-to-date documents from your account and your badge stays on while we check them. %4$s"
 msgstr ""
 
 #. translators: 1: the vendor's name, 2: their profile name, 3: the expiry date, 4: the link to their profile. All four are filled in automatically.
-#: includes/emails/class-hpve-vendor-verification-remind.php:60
+#: includes/emails/class-hpve-vendor-verification-remind.php:69
 #, php-format
 msgid "Hi, %1$s! Your verified status for \"%2$s\" is due for review on %3$s. Please make sure your profile, listings and contact details are up to date before then, so it can be renewed: %4$s"
+msgstr ""
+
+#: includes/emails/class-hpve-vendor-verification-remind.php:78
+msgid "Your verified status is due for review"
 msgstr ""
 
 #: includes/emails/class-hpve-vendor-verification-verified.php:35
@@ -424,6 +1827,372 @@ msgstr ""
 #: includes/emails/class-hpve-vendor-verification-verified.php:63
 #, php-format
 msgid "Hi, %1$s! Your profile \"%2$s\" has been verified, and the verified badge now shows on %3$s. %4$sYou can see it here: %5$s"
+msgstr ""
+
+#: includes/fields/class-hpve-document-upload.php:219
+#: templates/hpve-request/document-list.php:35
+msgid "View"
+msgstr ""
+
+#: includes/fields/class-hpve-document-upload.php:222
+msgid "Remove"
+msgstr ""
+
+#. translators: 1: file types such as JPG, PNG, PDF; 2: a size such as 10 MB; 3: number of files.
+#: includes/forms/class-hpve-request-submit.php:71
+#, php-format
+msgid "%1$s, up to %2$s each, %3$s file(s) at most."
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:112
+#: includes/models/class-hpve-request.php:166
+msgid "Anything we should know?"
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:113
+msgid "Optional. For example, if your certificate is in a previous name."
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:117
+msgid "I confirm these documents are mine and I agree to them being checked and stored securely until they are deleted."
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:122
+msgid "Privacy policy"
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:126
+msgid "Consent"
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:144
+msgid "Send again"
+msgstr ""
+
+#: includes/forms/class-hpve-request-submit.php:144
+msgid "Send for review"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-companies-house.php:65
+msgid "Add a free Companies House API key below. Register at developer.company-information.service.gov.uk, create an application and copy its key."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-companies-house.php:74
+msgid "Company number"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-companies-house.php:83
+msgid "The eight-character number on your certificate of incorporation, for example 01234567 or SC123456. Leading zeros are optional."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-companies-house.php:119
+msgid "That does not look like a company number. It is eight characters: either eight digits, or two letters and six digits, such as SC123456."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-companies-house.php:128
+msgid "Companies House has no company with that number. Please check it on your certificate of incorporation and send it again."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-complycube.php:90
+msgid "Add a ComplyCube API key below. A key starting with test_ runs in their sandbox and one starting with live_ runs for real, so the key alone decides the mode."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-complycube.php:94
+msgid "Add the ComplyCube workflow template id below, from Workflows in their dashboard."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-complycube.php:98
+msgid "Add a ComplyCube webhook pointing at the address above and paste its secret below."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-complycube.php:122
+msgid "ComplyCube: no key set."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-complycube.php:126
+msgid "ComplyCube: sandbox key (test_), so no check costs anything and no result is real."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-complycube.php:127
+msgid "ComplyCube: live key, so every completed check is charged."
+msgstr ""
+
+#. translators: 1: the service's name, 2: attempt number.
+#. translators: 1: the register's name, 2: attempt number.
+#: includes/providers/class-hpve-provider-hosted.php:247
+#: includes/providers/class-hpve-provider-registry.php:172
+#, php-format
+msgid "%1$s check started (attempt %2$d)."
+msgstr ""
+
+#. translators: 1: the service's name, 2: the error message.
+#: includes/providers/class-hpve-provider-hosted.php:284
+#, php-format
+msgid "%1$s could not start the check: %2$s"
+msgstr ""
+
+#. translators: %s: the service's name.
+#: includes/providers/class-hpve-provider-hosted.php:312
+#, php-format
+msgid "%s session ready for the applicant."
+msgstr ""
+
+#. translators: 1: the service's name, 2: the error message.
+#. translators: 1: the register's name, 2: the error message.
+#: includes/providers/class-hpve-provider-hosted.php:455
+#: includes/providers/class-hpve-provider-registry.php:249
+#, php-format
+msgid "%1$s could not be reached: %2$s"
+msgstr ""
+
+#. translators: %s: the service's name.
+#: includes/providers/class-hpve-provider-hosted.php:493
+#, php-format
+msgid "Approved automatically: %s verified the applicant."
+msgstr ""
+
+#. translators: %s: the service's name.
+#: includes/providers/class-hpve-provider-hosted.php:509
+#, php-format
+msgid "%s finished the check and asked for a person to look at it. Approve or reject this one by hand."
+msgstr ""
+
+#. translators: %s: the service's name.
+#: includes/providers/class-hpve-provider-hosted.php:514
+#, php-format
+msgid "%s verified the applicant; waiting for an admin to approve."
+msgstr ""
+
+#. translators: %s: the service's name.
+#: includes/providers/class-hpve-provider-hosted.php:554
+#, php-format
+msgid "%s has not finished the check yet."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-hosted.php:572
+msgid "The check expired before it was finished. Start it again to continue."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-hosted.php:575
+msgid "The identity check did not pass. You can try again, or send your documents to us instead."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-hosted.php:578
+msgid "You have not finished the check. Start it again to continue."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-hosted.php:581
+msgid "The check could not be completed. Please try again, or send your documents to us."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-manual.php:37
+msgid "Manual review"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-persona.php:92
+msgid "Add a Persona API key below. Create one in the Persona Dashboard under API Keys."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-persona.php:96
+msgid "Add the Persona inquiry template id below (it starts with itmpl_), and switch on \"Create a one-time link\" for that template so applicants have somewhere to go."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-persona.php:100
+msgid "Add a Persona webhook pointing at the address above and paste its secret below."
+msgstr ""
+
+#. translators: 1: the register's name, 2: the registered business name.
+#: includes/providers/class-hpve-provider-registry.php:290
+#, php-format
+msgid "Approved automatically: %1$s confirmed %2$s."
+msgstr ""
+
+#. translators: %s: the registered business name.
+#: includes/providers/class-hpve-provider-registry.php:355
+#, php-format
+msgid "The register shows that %s is no longer trading, so we cannot verify it."
+msgstr ""
+
+#. translators: %s: the registered business name.
+#: includes/providers/class-hpve-provider-registry.php:355
+msgid "this business"
+msgstr ""
+
+#. translators: 1: the name on the register, 2: the label of the reference field.
+#: includes/providers/class-hpve-provider-registry.php:360
+#, php-format
+msgid "That reference is registered to %1$s, which does not match your name here. Please check the %2$s, or change your name to the registered one and send it again."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-registry.php:367
+msgid "We could not read the register's answer. Please try again, or send us your documents instead."
+msgstr ""
+
+#. translators: 1: the registered business name, 2: the register status, e.g. "liquidation".
+#: includes/providers/class-hpve-provider-registry.php:381
+#, php-format
+msgid "%1$s exists but the register lists it as \"%2$s\". Approve or reject this one by hand."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-registry.php:382
+#: includes/providers/class-hpve-provider-registry.php:391
+msgid "The business"
+msgstr ""
+
+#. translators: 1: the registered business name, 2: the register status.
+#: includes/providers/class-hpve-provider-registry.php:390
+#, php-format
+msgid "%1$s was found, but this plugin does not recognise the register status \"%2$s\", so it has not decided. Approve or reject this one by hand."
+msgstr ""
+
+#. translators: %s: the register's name.
+#: includes/providers/class-hpve-provider-registry.php:399
+#, php-format
+msgid "%s confirmed the number, but the register does not publish the trader's name, so it could not be matched. Waiting for you to approve."
+msgstr ""
+
+#. translators: 1: the register's name, 2: the registered business name.
+#: includes/providers/class-hpve-provider-registry.php:406
+#, php-format
+msgid "%1$s confirmed %2$s; waiting for an admin to approve."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-registry.php:408
+msgid "the business"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:114
+msgid "The WooCommerce Stripe gateway is not active, so there is no Stripe key to use."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:121
+msgid "The Stripe gateway is in test mode but has no test secret key."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:122
+msgid "The Stripe gateway is in live mode but has no live secret key."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:127
+msgid "Paste the webhook signing secret for test mode below, then choose Stripe Identity."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:128
+msgid "Paste the webhook signing secret for live mode below, then choose Stripe Identity."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:141
+msgid "Stripe gateway: not active."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:145
+msgid "test mode"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:145
+msgid "live mode"
+msgstr ""
+
+#. translators: 1: "test mode" or "live mode", 2: the last four characters of the key.
+#: includes/providers/class-hpve-provider-stripe.php:149
+#, php-format
+msgid "Stripe gateway: %1$s, key present (ends %2$s)."
+msgstr ""
+
+#. translators: %s: "test mode" or "live mode".
+#: includes/providers/class-hpve-provider-stripe.php:153
+#, php-format
+msgid "Stripe gateway: %s, no key found."
+msgstr ""
+
+#. translators: %d: attempt number.
+#: includes/providers/class-hpve-provider-stripe.php:211
+#, php-format
+msgid "Stripe Identity check started (attempt %d)."
+msgstr ""
+
+#. translators: %s: the error message.
+#: includes/providers/class-hpve-provider-stripe.php:308
+#, php-format
+msgid "Stripe could not start the check: %s"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:332
+msgid "Stripe Identity session ready for the applicant."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:426
+msgid "A Stripe result from the other mode (test or live) was ignored."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:468
+msgid "You have not finished the Stripe check. Start it again to continue."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:471
+msgid "You chose not to go ahead with the Stripe check. You can send your documents to us instead."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:474
+msgid "Stripe could not verify the document you provided."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:477
+msgid "Stripe could not complete the check. Please try again or send your documents to us."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:488
+msgid "Approved automatically: Stripe Identity verified the document."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:499
+msgid "Stripe Identity verified the document; waiting for an admin to approve."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:539
+msgid "Stripe Identity is still processing the document."
+msgstr ""
+
+#. translators: %s: the error message.
+#: includes/providers/class-hpve-provider-stripe.php:572
+#, php-format
+msgid "Stripe could not redact the session: %s"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-stripe.php:573
+msgid "Stripe session redaction requested."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-vat.php:44
+msgid "VAT number check"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-vat.php:71
+msgid "VAT number"
+msgstr ""
+
+#: includes/providers/class-hpve-provider-vat.php:80
+msgid "Your VAT registration number, for example GB123456789. A UK number can be typed as nine digits on its own."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-vat.php:126
+msgid "That does not look like a VAT number. A UK one is nine digits, optionally written with GB in front."
+msgstr ""
+
+#: includes/providers/class-hpve-provider-vat.php:135
+msgid "That VAT number is not registered. Please check it on a recent VAT return and send it again."
+msgstr ""
+
+#: includes/templates/class-hpve-verification-page.php:34
+msgid "Verification Page"
+msgstr ""
+
+#: includes/templates/class-hpve-verification-return-page.php:31
+msgid "Verification Return Page"
+msgstr ""
+
+#: includes/templates/class-hpve-verification-return-page.php:53
+msgid "Return message"
 msgstr ""
 
 #: includes/updater.php:683
@@ -481,14 +2250,189 @@ msgid_plural "Checked %s plugins for updates: all are up to date."
 msgstr[0] ""
 msgstr[1] ""
 
-#: verification-expiry-for-hivepress.php:111
+#. translators: %s: a date.
+#: templates/hpve-request/admin/applicant.php:27
+#, php-format
+msgid "Registered %s"
+msgstr ""
+
+#: templates/hpve-request/admin/applicant.php:44
+msgid "Not verified"
+msgstr ""
+
+#. translators: %d: number of Listings.
+#: templates/hpve-request/admin/applicant.php:55
+#, php-format
+msgid "%d Listing"
+msgid_plural "%d Listings"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/hpve-request/admin/applicant.php:60
+msgid "No Vendor profile yet. The request can be approved once the applicant has added a Listing."
+msgstr ""
+
+#. translators: %s: a date and time.
+#: templates/hpve-request/admin/decision.php:36
+#, php-format
+msgid "Submitted %s"
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:55
+msgid "This applicant has no Vendor profile yet, so there is no Verified box to tick."
+msgstr ""
+
+#. translators: 1: a date, 2: a period such as "1 year".
+#: templates/hpve-request/admin/decision.php:59
+#, php-format
+msgid "Verified until %1$s (Vendor's period: %2$s)."
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:62
+msgid "The verification will not expire (no period is set for this Vendor or the site)."
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:68
+#: templates/hpve-request/admin/decision.php:70
+msgid "Ask for more information"
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:69
+msgid "What do you need from them? This is emailed to the applicant."
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:75
+msgid "Reason (sent to the applicant). Required."
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:81
+msgid "Note sent:"
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:84
+msgid "Reason sent:"
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:91
+msgid "Re-open for review"
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:93
+msgid "Unticks the Verified box on the Vendor until a new decision is made."
+msgstr ""
+
+#: templates/hpve-request/admin/decision.php:97
+msgid "The applicant has not sent this request for review yet."
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:36
+msgid "Stripe holds the identity document and selfie for this request."
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:37
+msgid "Open in Stripe Dashboard"
+msgstr ""
+
+#. translators: %s: a date.
+#: templates/hpve-request/admin/documents.php:45
+#, php-format
+msgid "Documents were deleted on %s."
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:55
+msgid "(required)"
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:58
+msgid "(no longer asked for)"
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:62
+msgid "Nothing uploaded."
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:88
+msgid "From the applicant:"
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:92
+msgid "Delete every document on this request now? This cannot be undone."
+msgstr ""
+
+#: templates/hpve-request/admin/documents.php:96
+msgid "Delete all documents now"
+msgstr ""
+
+#: templates/hpve-request/admin/history.php:20
+msgid "Nothing yet."
+msgstr ""
+
+#: templates/hpve-request/admin/history.php:25
+msgid "When"
+msgstr ""
+
+#: templates/hpve-request/admin/history.php:26
+msgid "Who"
+msgstr ""
+
+#: templates/hpve-request/admin/history.php:27
+msgid "What"
+msgstr ""
+
+#: templates/hpve-request/admin/history.php:38
+msgid "(shown to the applicant)"
+msgstr ""
+
+#. translators: %s: the order number.
+#: templates/hpve-request/admin/payment.php:23
+#, php-format
+msgid "Order #%s"
+msgstr ""
+
+#: templates/hpve-request/admin/payment.php:29
+msgid "The refund did not change the verification. Untick the Verified box on the Vendor if it should."
+msgstr ""
+
+#: templates/hpve-request/cta.php:14
+msgid "Your verified badge has expired. Send your documents again to get it back."
+msgstr ""
+
+#: templates/hpve-request/cta.php:16
+msgid "A verified badge shows clients that we have checked who you are."
+msgstr ""
+
+#: templates/hpve-request/document-list.php:21
+msgid "Your documents"
+msgstr ""
+
+#: templates/hpve-request/guest.php:15
+msgid "Sign in to start your verification."
+msgstr ""
+
+#: templates/hpve-request/guest.php:17
+msgid "Sign in"
+msgstr ""
+
+#: templates/hpve-request/guest.php:18
+msgid "Register"
+msgstr ""
+
+#: templates/hpve-request/return.php:16
+msgid "Thanks, Stripe is checking your document. This normally takes a few minutes and we will email you when it is done."
+msgstr ""
+
+#: templates/hpve-request/return.php:18
+msgid "Back to Verification"
+msgstr ""
+
+#: verification-expiry-for-hivepress.php:174
 msgid "Settings"
 msgstr ""
 
-#: verification-expiry-for-hivepress.php:127
+#: verification-expiry-for-hivepress.php:190
 msgid "Verification Expiry for HivePress requires the HivePress plugin to be installed and activated."
 msgstr ""
 
-#: verification-expiry-for-hivepress.php:163
+#: verification-expiry-for-hivepress.php:226
 msgid "Donate"
 msgstr ""

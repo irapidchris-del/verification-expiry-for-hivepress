@@ -1,0 +1,93 @@
+[
+  {
+    "name": "valid",
+    "secret": "whsec_test_dummy",
+    "offset": 0,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": false,
+    "expected": true
+  },
+  {
+    "name": "wrong secret",
+    "secret": "whsec_test_wrong",
+    "offset": 0,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": false,
+    "expected": false
+  },
+  {
+    "name": "expired t (301 s)",
+    "secret": "whsec_test_dummy",
+    "offset": -301,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": false,
+    "expected": false
+  },
+  {
+    "name": "future t (301 s)",
+    "secret": "whsec_test_dummy",
+    "offset": 301,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": false,
+    "expected": false
+  },
+  {
+    "name": "within tolerance (299 s)",
+    "secret": "whsec_test_dummy",
+    "offset": -299,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": false,
+    "expected": true
+  },
+  {
+    "name": "v0 only",
+    "secret": "whsec_test_dummy",
+    "offset": 0,
+    "schemes": [
+      "v0"
+    ],
+    "tamper": false,
+    "expected": false
+  },
+  {
+    "name": "two v1, one valid (rolled secret)",
+    "secret": "whsec_test_dummy",
+    "offset": 0,
+    "schemes": [
+      "v1bad",
+      "v1"
+    ],
+    "tamper": false,
+    "expected": true
+  },
+  {
+    "name": "body altered by one byte",
+    "secret": "whsec_test_dummy",
+    "offset": 0,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": true,
+    "expected": false
+  },
+  {
+    "name": "empty secret",
+    "secret": "",
+    "offset": 0,
+    "schemes": [
+      "v1"
+    ],
+    "tamper": false,
+    "expected": false
+  }
+]

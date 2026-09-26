@@ -1,0 +1,24 @@
+{
+  "id": "evt_testverified001",
+  "object": "event",
+  "type": "identity.verification_session.verified",
+  "livemode": false,
+  "created": 1757145600,
+  "data": {
+    "object": {
+      "id": "vs_test1AbC",
+      "object": "identity.verification_session",
+      "livemode": false,
+      "type": "document",
+      "client_reference_id": "hpve-101",
+      "metadata": {
+        "hpve_request_id": "101",
+        "site": "https://hivepress-dev.local"
+      },
+      "url": null,
+      "client_secret": null,
+      "last_error": null,
+      "status": "verified"
+    }
+  }
+}

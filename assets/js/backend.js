@@ -373,7 +373,252 @@
 		}, 0 );
 	}
 
+
+	/* ======================================================================
+	 * DOCUMENT TYPE CARDS
+	 *
+	 * Each row of the Document Types repeater becomes a house card: a header
+	 * bar carrying the row's name and two badges, folding the fields beneath.
+	 * The cells are labelled and moved, never rebuilt, so they post exactly as
+	 * core rendered them, and core's own "add row" (which clones the first row)
+	 * keeps working because the row keeps every cell it started with. Fold
+	 * state is remembered per position in localStorage: rows have no stable
+	 * ids (core keys them with uniqid() on every render).
+	 * ================================================================== */
+
+	var CARD_STORE = 'hpveCards',
+		DOC_TYPES_KEY = 'hp_verification_expiry_for_hivepress_doc_types';
+
+	function cardLabels() {
+		return ( window.hpveBackendData && window.hpveBackendData.labels ) || {};
+	}
+
+	function readCardStore() {
+		try {
+			return JSON.parse( window.localStorage.getItem( CARD_STORE ) ) || {};
+		} catch ( error ) {
+			return {};
+		}
+	}
+
+	function writeCardStore( store ) {
+		try {
+			window.localStorage.setItem( CARD_STORE, JSON.stringify( store ) );
+		} catch ( error ) {
+			// Storage can be blocked; the cards still work and forget their state on reload.
+		}
+	}
+
+	/**
+	 * The repeater rows inside a container, INCLUDING the container itself.
+	 *
+	 * Core hands hivepress:init the newly added row rather than the page, so
+	 * "the rows inside this" finds nothing on a new row; addBack() covers it.
+	 *
+	 * @param {Object} container jQuery container.
+	 * @return {Object}
+	 */
+	function docTypeRows( container ) {
+		return container.find( 'div[data-component="repeater"] table.hp-table > tbody > tr' ).addBack( 'tr' ).filter( function () {
+			return !! this.querySelector( 'input[name^="' + DOC_TYPES_KEY + '["]' );
+		} );
+	}
+
+	function cardTitle( row ) {
+		var label = row.querySelector( 'input[name$="[label]"]' ),
+			key = row.querySelector( 'input[name$="[key]"]' ),
+			text = ( label && label.value ? label.value : ( key && key.value ? key.value : '' ) ).trim();
+
+		return text || cardLabels().newType || 'New document type';
+	}
+
+	function cardBadges( row ) {
+		var enabled = row.querySelector( 'input[name$="[enabled]"]' ),
+			required = row.querySelector( 'input[name$="[required]"]' ),
+			parts = [];
+
+		if ( enabled && ! enabled.checked ) {
+			parts.push( cardLabels().off || 'off' );
+		}
+
+		if ( required && required.checked ) {
+			parts.push( cardLabels().required || 'required' );
+		}
+
+		return parts.join( ', ' );
+	}
+
+	function updateCardHead( row ) {
+		var head = row.querySelector( ':scope > td.hpve-card-head' );
+
+		if ( ! head ) {
+			return;
+		}
+
+		head.querySelector( '.hpve-card-name' ).textContent = cardTitle( row );
+		head.querySelector( '.hpve-card-badge' ).textContent = cardBadges( row );
+	}
+
+	function setCardCollapsed( row, collapsed, remember ) {
+		row.classList.toggle( 'hpve-card--collapsed', collapsed );
+
+		var toggle = row.querySelector( '.hpve-card-toggle' );
+
+		if ( toggle ) {
+			toggle.setAttribute( 'aria-expanded', collapsed ? 'false' : 'true' );
+			toggle.querySelector( '.dashicons' ).className = 'dashicons ' + ( collapsed ? 'dashicons-arrow-down-alt2' : 'dashicons-arrow-up-alt2' );
+		}
+
+		if ( remember ) {
+			var store = readCardStore(),
+				rows = row.parentElement ? Array.prototype.slice.call( row.parentElement.children ) : [],
+				position = rows.indexOf( row );
+
+			store[ position ] = collapsed ? 1 : 0;
+
+			writeCardStore( store );
+		}
+	}
+
+	/**
+	 * Gives each cell the field's own label, read from the input's name.
+	 *
+	 * Core renders repeater cells without labels because the table header
+	 * names the columns; once the row is a card there is no header row.
+	 *
+	 * @param {Element} row The row.
+	 */
+	function labelCells( row ) {
+		var names = cardLabels().fields || {};
+
+		Array.prototype.forEach.call( row.children, function ( cell ) {
+			if ( cell.querySelector( '.hpve-field-label' ) ) {
+				return;
+			}
+
+			var control = cell.querySelector( 'input[name], select[name], textarea[name]' );
+
+			if ( ! control ) {
+				return;
+			}
+
+			var match = control.name.match( /\[([a-z_]+)\]$/ ),
+				name = match ? match[ 1 ] : '';
+
+			if ( ! name || ! names[ name ] ) {
+				return;
+			}
+
+			var label = document.createElement( 'span' );
+
+			label.className = 'hpve-field-label';
+			label.textContent = names[ name ];
+
+			cell.insertBefore( label, cell.firstChild );
+		} );
+	}
+
+	function addDocTypeCards( container ) {
+		var store = readCardStore();
+
+		docTypeRows( container ).each( function () {
+			var row = this;
+
+			if ( row.querySelector( ':scope > td.hpve-card-head' ) ) {
+				return;
+			}
+
+			row.classList.add( 'hpve-card' );
+
+			labelCells( row );
+
+			var head = document.createElement( 'td' ),
+				toggle = document.createElement( 'button' ),
+				chevron = document.createElement( 'span' ),
+				name = document.createElement( 'span' ),
+				badge = document.createElement( 'span' );
+
+			head.className = 'hpve-card-head';
+			toggle.type = 'button';
+			toggle.className = 'hpve-card-toggle';
+			chevron.className = 'dashicons dashicons-arrow-up-alt2';
+			name.className = 'hpve-card-name';
+			badge.className = 'hpve-card-badge';
+
+			toggle.appendChild( chevron );
+			head.appendChild( toggle );
+			head.appendChild( name );
+			head.appendChild( badge );
+
+			// After the drag-handle cell and before the fields, so the remove
+			// button stays the last cell where the stylesheet pins it.
+			row.insertBefore( head, row.children[ 1 ] || null );
+
+			head.addEventListener( 'click', function () {
+				setCardCollapsed( row, ! row.classList.contains( 'hpve-card--collapsed' ), true );
+			} );
+
+			row.addEventListener( 'input', function () {
+				updateCardHead( row );
+			} );
+
+			row.addEventListener( 'change', function () {
+				updateCardHead( row );
+			} );
+
+			updateCardHead( row );
+
+			var rows = row.parentElement ? Array.prototype.slice.call( row.parentElement.children ) : [],
+				position = rows.indexOf( row ),
+				remembered = store[ position ],
+				filled = !! ( row.querySelector( 'input[name$="[key]"]' ) || {} ).value,
+				collapsed = 'undefined' !== typeof remembered ? !! remembered : ( filled && rows.length > 1 );
+
+			setCardCollapsed( row, collapsed, false );
+		} );
+	}
+
+	/* ======================================================================
+	 * REVIEW SCREEN
+	 *
+	 * The Reject button stays disabled until a reason has been typed, because
+	 * a rejection without a reason is the one outcome that must carry one.
+	 * ================================================================== */
+
+	function armRejectButton() {
+		var reason = document.getElementById( 'hpve_reason' ),
+			button = document.querySelector( '.hpve-decision__reject' );
+
+		if ( ! reason || ! button ) {
+			return;
+		}
+
+		function update() {
+			button.disabled = '' === reason.value.trim();
+		}
+
+		reason.addEventListener( 'input', update );
+
+		update();
+
+		var title = document.getElementById( 'title' );
+
+		if ( title ) {
+			title.readOnly = true;
+			title.closest( '#titlewrap' ) && title.closest( '#titlewrap' ).classList.add( 'hpve-title-locked' );
+		}
+	}
+
 	$( document ).ready( function () {
 		addSettingsChrome();
+		addDocTypeCards( $( document.body ) );
+		armRejectButton();
+	} );
+
+	// Newly added repeater rows arrive through core's own init event.
+	$( document ).on( 'hivepress:init', function ( event, container ) {
+		if ( container ) {
+			addDocTypeCards( $( container ) );
+		}
 	} );
 } )( jQuery );

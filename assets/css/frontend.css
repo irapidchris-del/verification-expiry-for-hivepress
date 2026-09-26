@@ -1,0 +1,109 @@
+/* Verification Expiry for HivePress: the status card and the file rows.
+ *
+ * Every other class on the card is core's (hp-block, hp-status, hp-meta, hp-button, button
+ * modifiers), so the theme supplies the look. Only layout is written here, in rem and
+ * percentages, with no colours of our own (resources/hivepress-ui.md, "Native look and feel").
+ */
+
+.hpve-card__header {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	margin-bottom: 1rem;
+}
+
+.hpve-card__header .hp-section__title {
+	margin: 0;
+}
+
+.hpve-card__note {
+	margin: 1rem 0;
+	padding: 0.5rem 1rem;
+	border-left: 0.25rem solid currentColor;
+	opacity: 0.85;
+}
+
+.hpve-card__facts span {
+	display: inline-block;
+	margin-right: 1rem;
+}
+
+.hpve-card__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-top: 1rem;
+}
+
+/*
+ * Link-buttons keep their white label on hover and focus. HiveTheme (all six official themes,
+ * vendor/hivepress/hivetheme/assets/css/frontend.min.css) ships a bare a:hover{color:#1db1fc} at
+ * (0,1,1), which beats its own .button--primary/.button--secondary{color:#fff} at (0,1,0), so
+ * Get verified, Sign in, Register and the card's other links turned blue on hover (measured
+ * 26 Sept 2026). Scoped to this plugin's two containers.
+ */
+.hpve-card__actions a.button--primary:hover,
+.hpve-card__actions a.button--primary:focus,
+.hpve-card__actions a.button--secondary:hover,
+.hpve-card__actions a.button--secondary:focus,
+.hpve-cta a.button--primary:hover,
+.hpve-cta a.button--primary:focus {
+	color: #fff;
+}
+
+.hpve-card__message[hidden] {
+	display: none;
+}
+
+.hpve-card__message {
+	flex-basis: 100%;
+	display: block;
+}
+
+.hpve-cta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+}
+
+.hpve-cta p {
+	flex: 1 1 62%;
+	margin: 0;
+}
+
+.hpve-files {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.hpve-file {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.hpve-file__name {
+	flex: 1 1 62%;
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.hpve-file__delete {
+	margin-left: auto;
+}
+
+.hpve-or {
+	margin: 2rem 0 1rem;
+}
+
+@media (max-width: 47.99em) {
+	.hpve-card__actions .hp-button,
+	.hpve-cta .hp-button {
+		width: 100%;
+	}
+}
