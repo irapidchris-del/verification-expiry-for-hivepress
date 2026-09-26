@@ -417,7 +417,7 @@ foreach ( $scan as $path => $content ) {
 		$em_dash[] = basename( $path );
 	}
 
-	if ( preg_match( '/freestylr|anthropic|claude/i', $content ) ) {
+	if ( preg_match( '/anthropic|claude/i', $content ) ) {
 		$business[] = basename( $path );
 	}
 }
