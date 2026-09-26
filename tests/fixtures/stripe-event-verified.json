@@ -13,7 +13,7 @@
       "client_reference_id": "hpve-101",
       "metadata": {
         "hpve_request_id": "101",
-        "site": "https://hivepress-dev.local"
+        "site": "https://example.test"
       },
       "url": null,
       "client_secret": null,

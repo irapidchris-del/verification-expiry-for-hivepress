@@ -622,7 +622,7 @@ final class Hpve_Provider extends Component {
 				HPVE_OPTION_PREFIX . 'registry_require_name' => [
 					'label'       => esc_html__( 'Name Match', 'verification-expiry-for-hivepress' ),
 					'caption'     => esc_html__( 'The registered name must match the Vendor name', 'verification-expiry-for-hivepress' ),
-					'description' => esc_html__( 'Ticked, a number registered to a different name is sent back to the applicant to correct rather than approved. Endings such as Ltd and Limited are ignored when comparing, so "Ivy Lane Hair" matches "IVY LANE HAIR LTD". Untick it if your Vendors trade under names that differ from their registered ones.', 'verification-expiry-for-hivepress' ),
+					'description' => esc_html__( 'Ticked, a number registered to a different name is sent back to the applicant to correct rather than approved. Endings such as Ltd and Limited are ignored when comparing, so "Ivy Lane Studio" matches "IVY LANE STUDIO LTD". Untick it if your Vendors trade under names that differ from their registered ones.', 'verification-expiry-for-hivepress' ),
 					'type'        => 'checkbox',
 					'default'     => true,
 					'_order'      => 20,

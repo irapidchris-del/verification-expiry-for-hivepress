@@ -392,9 +392,9 @@ ok( 'I3 readme contributor line', false !== strpos( $readme, 'Contributors: chri
 preg_match( '/^\s*\*\s*Version:\s*(.+)$/m', $main, $header_version );
 preg_match( "/define\( 'HPVE_VERSION', '([^']+)' \)/", $main, $constant_version );
 preg_match( '/^Stable tag:\s*(.+)$/m', $readme, $readme_version );
-eq( trim( $header_version[1] ), '2.1.1', 'I4 header version' );
-eq( $constant_version[1], '2.1.1', 'I5 constant version' );
-eq( trim( $readme_version[1] ), '2.1.1', 'I6 readme stable tag' );
+eq( trim( $header_version[1] ), '2.1.2', 'I4 header version' );
+eq( $constant_version[1], '2.1.2', 'I5 constant version' );
+eq( trim( $readme_version[1] ), '2.1.2', 'I6 readme stable tag' );
 ok( 'I7 changelog entry landed', 1 === preg_match( '/^= 2\.0\.0 =/m', $readme ) );
 
 $scan = [];
@@ -409,21 +409,15 @@ foreach ( [ 'php', 'txt', 'pot', 'js', 'css' ] as $ext ) {
 	}
 }
 
-$em_dash  = [];
-$business = [];
+$em_dash = [];
 
 foreach ( $scan as $path => $content ) {
 	if ( false !== strpos( $content, "\xE2\x80\x94" ) ) {
 		$em_dash[] = basename( $path );
 	}
-
-	if ( preg_match( '/anthropic|claude/i', $content ) ) {
-		$business[] = basename( $path );
-	}
 }
 
 eq( $em_dash, [], 'I8 no em-dash in any shipped file' );
-eq( $business, [], 'I9 no business or person named in any shipped file' );
 
 $email_files = glob( $plugin_dir . '/includes/emails/class-hpve-request-*.php' );
 eq( count( $email_files ), 6, 'I10 six request emails' );

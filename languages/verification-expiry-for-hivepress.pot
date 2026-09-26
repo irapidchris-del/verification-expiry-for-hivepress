@@ -755,7 +755,7 @@ msgid "The registered name must match the Vendor name"
 msgstr ""
 
 #: includes/components/class-hpve-provider.php:625
-msgid "Ticked, a number registered to a different name is sent back to the applicant to correct rather than approved. Endings such as Ltd and Limited are ignored when comparing, so \"Ivy Lane Hair\" matches \"IVY LANE HAIR LTD\". Untick it if your Vendors trade under names that differ from their registered ones."
+msgid "Ticked, a number registered to a different name is sent back to the applicant to correct rather than approved. Endings such as Ltd and Limited are ignored when comparing, so \"Ivy Lane Studio\" matches \"IVY LANE STUDIO LTD\". Untick it if your Vendors trade under names that differ from their registered ones."
 msgstr ""
 
 #: includes/components/class-hpve-provider.php:633

@@ -34,7 +34,7 @@ the card the Vendor sees.
 
 ## Runtime check (a real HivePress install, WP-CLI)
 
-`tests/runtime-check.php` runs against hivepress-dev through `wp eval-file`, in phases, because the account page renders only for a user who was signed in before WordPress loaded:
+`tests/runtime-check.php` runs against a local HivePress install through `wp eval-file`, in phases, because the account page renders only for a user who was signed in before WordPress loaded:
 
 ```sh
 HPVE_PHASE=seed  wp eval-file tests/runtime-check.php                       # prints APPLICANT_ID etc.
