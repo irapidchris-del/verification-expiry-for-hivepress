@@ -31,7 +31,7 @@ jobs:
         run: |
           SLUG=verification-expiry-for-hivepress
           mkdir -p "build/$SLUG"
-          for item in "$SLUG.php" uninstall.php readme.txt license.txt includes assets languages; do
+          for item in "$SLUG.php" uninstall.php readme.txt license.txt includes assets templates languages; do
             if [ -e "$item" ]; then
               cp -r "$item" "build/$SLUG/"
             else
